@@ -1,0 +1,20 @@
+version: '3.8'
+
+# Local development only.
+# Production deployment is handled by the main landing-page repo,
+# triggered automatically when you push to this repo's main branch.
+# See README.md for the workflow.
+
+services:
+  soap-ai-lp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: soap-ai-lp-dev
+    ports:
+      - "8080:80"
+    # Live-reload: edits to index.html / styles.css show up on refresh
+    # without rebuilding. Comment out to test the production build.
+    volumes:
+      - .:/usr/share/nginx/html:ro
+    restart: unless-stopped

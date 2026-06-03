@@ -1,0 +1,27 @@
+name: Trigger production deploy
+
+# Fires a repository_dispatch event at the main landing-page repo
+# whenever someone pushes to main here. The main repo's deploy workflow
+# (.github/workflows/deploy.yml in andreaskra/landing-page) listens for
+# the `soap-deploy` event type and SSHes into the production VPS to
+# rebuild the soap-ai.com container.
+#
+# Required secret in this repo's settings:
+#   DEPLOY_TRIGGER_TOKEN  — fine-grained PAT scoped to andreaskra/landing-page
+#                           with: metadata:read, contents:read, actions:write
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:   # also allow manual re-deploys from the Actions tab
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fire repository_dispatch at main repo
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.DEPLOY_TRIGGER_TOKEN }}
+          repository: andreaskra/landing-page
+          event-type: soap-deploy
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "actor": "${{ github.actor }}"}'

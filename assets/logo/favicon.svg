@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-label="SOAP favicon">
+  <rect width="32" height="32" rx="6" fill="#0A0E14"/>
+  <text x="16" y="22" text-anchor="middle"
+        font-family="'Inter Tight', Inter, 'Arial Black', sans-serif"
+        font-weight="700" font-size="20" letter-spacing="-0.4"
+        fill="#EFEAE0">S</text>
+  <rect x="21" y="21" width="4" height="4" fill="#D6EE5C"/>
+</svg>
