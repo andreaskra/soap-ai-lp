@@ -44,8 +44,8 @@ The flow:
 
 1. Push to `main` triggers [`.github/workflows/trigger-deploy.yml`](.github/workflows/trigger-deploy.yml).
 2. That workflow fires a `repository_dispatch` event at the main infrastructure repo.
-3. The main repo's deploy workflow SSHes into the production VPS, pulls the latest from this repo, and rebuilds the soap-ai.com container.
-4. The other landing pages on the same VPS are not affected.
+3. The main repo's deploy workflow SSHes into the production VPS, pulls the latest from this repo, and rebuilds the stack.
+4. Other landing pages on the same VPS go through a brief restart (a few seconds) as the whole stack comes back up.
 
 End-to-end deploy time is usually under 90 seconds. You can watch progress in the **Actions** tab of this repo (first step) and then in the main repo (second step — ask Andreas for visibility if needed).
 
