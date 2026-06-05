@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger landing-page deploy workflow
-        uses: peter-evans/workflow-dispatch@v3
+        uses: benc-uk/workflow-dispatch@v1
         with:
           token: ${{ secrets.DEPLOY_TRIGGER_TOKEN }}
           repo: andreaskra/landing-page
