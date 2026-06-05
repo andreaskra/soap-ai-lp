@@ -1,31 +1,27 @@
-name: Trigger production deploy
+name: Production deploy
 
-# Triggers the deploy.yml workflow in andreaskra/landing-page via
-# workflow_dispatch (NOT repository_dispatch). This matters for security:
-# repository_dispatch needs a PAT with `Contents: write` on the main repo,
-# which would also grant `git clone` / `git push` if the token leaked.
-# workflow_dispatch only needs `Actions: write`, which lets the holder
-# trigger workflows but cannot read or modify repo contents. So even if
-# this repo's DEPLOY_TRIGGER_TOKEN secret were exfiltrated by a
-# malicious workflow change, the attacker cannot read the main repo.
+# Production deploy is handled by a polling timer on the VPS — it checks
+# this repo's origin/main every 60s and rebuilds the soap-ai.com container
+# whenever there's a new commit. So this workflow doesn't actually deploy
+# anything; it just confirms to the pusher that the push was received and
+# tells them when to expect it live.
 #
-# Required secret in this repo's settings:
-#   DEPLOY_TRIGGER_TOKEN  — fine-grained PAT scoped to andreaskra/landing-page
-#                           with ONLY: Actions (Read and write)
-#                           (Metadata: Read is added automatically)
+# (No PAT or secret needed. The earlier dispatch-based wiring was replaced
+# because GitHub Actions can't reliably SSH into the VPS — Hostinger blocks
+# the rotating runner IPs at network edge.)
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch:   # also allow manual re-deploys from the Actions tab
+  workflow_dispatch:
 
 jobs:
-  trigger:
+  notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger landing-page deploy workflow
-        uses: peter-evans/workflow-dispatch@v3
-        with:
-          token: ${{ secrets.DEPLOY_TRIGGER_TOKEN }}
-          repo: andreaskra/landing-page
-          workflow: deploy.yml
-          ref: main
+      - name: Confirm push will deploy via VPS polling
+        run: |
+          echo "Production polls origin/main every 60 seconds."
+          echo "This commit (${GITHUB_SHA::7}) will be live at https://soap-ai.com within ~90 seconds."
+          echo ""
+          echo "Watch deploy progress on the VPS:"
+          echo "  journalctl -u myapp-deploy.service -f"
