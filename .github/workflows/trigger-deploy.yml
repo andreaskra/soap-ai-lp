@@ -1,14 +1,18 @@
 name: Trigger production deploy
 
-# Fires a repository_dispatch event at the main landing-page repo
-# whenever someone pushes to main here. The main repo's deploy workflow
-# (.github/workflows/deploy.yml in andreaskra/landing-page) listens for
-# the `soap-deploy` event type and SSHes into the production VPS to
-# rebuild the soap-ai.com container.
+# Triggers the deploy.yml workflow in andreaskra/landing-page via
+# workflow_dispatch (NOT repository_dispatch). This matters for security:
+# repository_dispatch needs a PAT with `Contents: write` on the main repo,
+# which would also grant `git clone` / `git push` if the token leaked.
+# workflow_dispatch only needs `Actions: write`, which lets the holder
+# trigger workflows but cannot read or modify repo contents. So even if
+# this repo's DEPLOY_TRIGGER_TOKEN secret were exfiltrated by a
+# malicious workflow change, the attacker cannot read the main repo.
 #
 # Required secret in this repo's settings:
 #   DEPLOY_TRIGGER_TOKEN  — fine-grained PAT scoped to andreaskra/landing-page
-#                           with: metadata:read, contents:read, actions:write
+#                           with ONLY: Actions (Read and write)
+#                           (Metadata: Read is added automatically)
 on:
   push:
     branches: [ "main" ]
@@ -18,10 +22,10 @@ jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
-      - name: Fire repository_dispatch at main repo
-        uses: peter-evans/repository-dispatch@v3
+      - name: Trigger landing-page deploy workflow
+        uses: peter-evans/workflow-dispatch@v3
         with:
           token: ${{ secrets.DEPLOY_TRIGGER_TOKEN }}
-          repository: andreaskra/landing-page
-          event-type: soap-deploy
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "actor": "${{ github.actor }}"}'
+          repo: andreaskra/landing-page
+          workflow: deploy.yml
+          ref: main
