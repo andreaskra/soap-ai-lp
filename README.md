@@ -42,14 +42,20 @@ git push
 
 The flow:
 
-1. Push to `main` triggers [`.github/workflows/trigger-deploy.yml`](.github/workflows/trigger-deploy.yml).
-2. That workflow fires a `repository_dispatch` event at the main infrastructure repo.
-3. The main repo's deploy workflow SSHes into the production VPS, pulls the latest from this repo, and rebuilds the stack.
+1. Push to `main` here.
+2. A systemd timer on the production VPS polls this repo's `origin/main` every 60 seconds.
+3. When it sees your commit, it rebuilds the soap-ai.com container.
 4. Other landing pages on the same VPS go through a brief restart (a few seconds) as the whole stack comes back up.
 
-End-to-end deploy time is usually under 90 seconds. You can watch progress in the **Actions** tab of this repo (first step) and then in the main repo (second step — ask Andreas for visibility if needed).
+End-to-end deploy time is usually under 90 seconds (max ~120s — your push could land just after a poll, so the next poll fires up to 60s later, then the deploy itself takes ~30s).
 
-To manually re-trigger a deploy without a code change: **Actions → Trigger production deploy → Run workflow**.
+The Actions tab on this repo shows a green checkmark confirming the push was received, with the expected go-live time. The actual deploy logs live on the VPS — ask Andreas for `journalctl -u myapp-deploy.service` output if you need to debug a failed deploy.
+
+To manually force a re-deploy without a code change: push an empty commit:
+```bash
+git commit --allow-empty -m "Re-deploy"
+git push
+```
 
 ---
 
