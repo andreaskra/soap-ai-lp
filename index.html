@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SOAP — AI operations for construction businesses doing $2M–$10M</title>
-<meta name="description" content="The construction company's leak audit. Slide your numbers, see what your chaos is costing, and plug the first leak in as little as 10 days. Non-technical. Owner-friendly." />
-<meta property="og:title" content="Your construction business is leaking $200K–$700K a year. We plug it in 10 days." />
-<meta property="og:description" content="For founder-led construction companies doing $2M–$10M. See your leak number live, then book a 30-minute demo." />
+<title>SOAP — AI operations for owner-operators doing $2M–$10M</title>
+<meta name="description" content="The Profit Leaks Audit. Slide your numbers, see what your business is quietly leaking, then plug the first leak with AI in days. Non-technical. Owner-friendly. Any industry." />
+<meta property="og:title" content="Your business is leaking $50K–$500K a year. We find it, then plug it with AI." />
+<meta property="og:description" content="For owner-operators doing $2M–$10M, any industry. See your leak number live, then book a 30-minute demo." />
 
 <link rel="icon" type="image/svg+xml" href="assets/logo/favicon.svg" />
 <link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.svg" />
@@ -29,7 +29,8 @@
       <a href="#calculator">The calculator</a>
       <a href="#pain">The pain</a>
       <a href="#how">How it works</a>
-      <a href="#book" class="topbar__cta">Book your demo →</a>
+      <a href="#team">Who we are</a>
+      <a href="/audit/" class="topbar__cta">Book your audit →</a>
     </nav>
   </div>
 </header>
@@ -41,19 +42,19 @@
   <div class="container">
     <div class="hero__grid">
       <div class="hero__copy">
-        <span class="eyebrow"><span class="pip"></span>For construction businesses doing $2M – $10M</span>
+        <span class="eyebrow"><span class="pip"></span>For owner-operators doing $2M – $10M · any industry</span>
         <h1 class="hero__title">
-          Your business is leaking <span class="signal">$200K–$700K</span> a year.<br>
-          We plug the first one in <span class="signal">10 days</span>.
+          Your business is leaking <span class="signal">$50K–$500K</span> a year.<br>
+          We find exactly where, then plug it with <span class="signal">AI</span>.
         </h1>
         <p class="hero__sub">
-          Quotes that take a week. Variations that never get billed. WIP reports built by hand on Sundays. Subbies you can't find. You don't need more software. You need an AI layer that knows your business — built around how you actually run jobs.
+          Margin slips on every job. Quotes sit in a queue. Leads go cold. Your best people spend half their week on admin. You don't need more software. You need an AI layer that knows how your business actually runs.
         </p>
         <div class="hero__actions">
           <a href="#calculator" class="btn btn--primary">See your leak number <span class="arrow">↓</span></a>
-          <a href="#book" class="btn btn--ghost">Book the demo</a>
+          <a href="/audit/" class="btn btn--ghost">Book the audit</a>
         </div>
-        <p class="hero__attr">Non-technical. No new software for your team to learn. Built around how you already run jobs.</p>
+        <p class="hero__attr">Non-technical. No new software for your team to learn. Built around how you already work.</p>
       </div>
 
       <div class="hero__stats">
@@ -71,10 +72,10 @@
   <div class="container">
     <div class="section__num">01 · The calculator</div>
     <h2 class="section__h">
-      Slide your numbers. See what <span class="signal">your chaos</span> is costing.
+      Slide your numbers. See what's <span class="signal">leaking out</span>.
     </h2>
     <p class="lead">
-      Most construction businesses your size are losing 5–8% of revenue to operational leaks — quotes lost in the queue, variations never billed, subcontractor coordination, manual WIP reporting, rework, project margin erosion. Move the sliders. The number is yours, with your name on it.
+      Most established businesses your size lose 4–8% of revenue to leaks they can't see. They sit across four areas: profit, people, process, and pipeline. Move the sliders. The number is yours, with your name on it.
     </p>
 
     <div class="calc">
@@ -91,7 +92,7 @@
 
         <div class="slider">
           <div class="slider__head">
-            <label for="team" class="slider__label">People on your team (office + site)</label>
+            <label for="team" class="slider__label">People on your team</label>
             <div class="slider__value mono" id="teamOut">20</div>
           </div>
           <input type="range" id="team" min="5" max="60" step="1" value="20" />
@@ -100,19 +101,19 @@
 
         <div class="slider">
           <div class="slider__head">
-            <label for="jobs" class="slider__label">Active jobs running at once</label>
-            <div class="slider__value mono" id="jobsOut">8</div>
+            <label for="owner" class="slider__label">How much still runs through you?</label>
+            <div class="slider__value mono" id="ownerOut">Typical</div>
           </div>
-          <input type="range" id="jobs" min="2" max="40" step="1" value="8" />
-          <div class="slider__scale"><span>2</span><span>40</span></div>
+          <input type="range" id="owner" min="1" max="3" step="1" value="2" />
+          <div class="slider__scale"><span>Lean</span><span>Founder-run</span></div>
         </div>
 
         <div class="slider">
           <div class="slider__head">
-            <label for="margin" class="slider__label">How chaotic does it feel right now?</label>
-            <div class="slider__value mono" id="marginOut">Stretched</div>
+            <label for="chaos" class="slider__label">How chaotic does it feel right now?</label>
+            <div class="slider__value mono" id="chaosOut">Stretched</div>
           </div>
-          <input type="range" id="margin" min="1" max="5" step="1" value="3" />
+          <input type="range" id="chaos" min="1" max="5" step="1" value="3" />
           <div class="slider__scale"><span>Running smooth</span><span>On fire</span></div>
         </div>
 
@@ -121,8 +122,8 @@
       <div class="calc__output">
         <div class="calc__readout">
           <div class="calc__readout-label">Estimated annual leak in your business</div>
-          <div class="calc__readout-figure mono" id="leakOut">$310,000</div>
-          <div class="calc__readout-sub mono" id="leakRange">range · $250K – $370K</div>
+          <div class="calc__readout-figure mono" id="leakOut">$300,000</div>
+          <div class="calc__readout-sub mono" id="leakRange">range · $250K – $350K</div>
         </div>
 
         <div class="calc__breakdown" id="breakdownOut">
@@ -130,13 +131,13 @@
         </div>
 
         <div class="calc__cta">
-          <a href="#book" class="btn btn--primary btn--lg">Book the 30-min demo <span class="arrow">→</span></a>
-          <p class="calc__note">We'll show you the system, walk through where this number comes from in your business, and the 10-day plan to plug the first one.</p>
+          <a href="/audit/" class="btn btn--primary btn--lg">Book the free audit <span class="arrow">→</span></a>
+          <p class="calc__note">We'll show you the system, walk through where this number comes from in your business, and the plan to plug the first one.</p>
         </div>
       </div>
     </div>
 
-    <p class="calc__disclaimer mono">Industry benchmarks for construction businesses $2M–$10M. Your actual number is produced in the Plug the Leaks Audit with your real data.</p>
+    <p class="calc__disclaimer mono">Industry benchmarks for owner-operators $2M–$10M. Your actual number is produced in the Profit Leaks Audit, on your real data.</p>
   </div>
 </section>
 
@@ -145,49 +146,49 @@
   <div class="container">
     <div class="section__num">02 · The pain</div>
     <h2 class="section__h">
-      You didn't get into construction to be a <span class="signal">spreadsheet jockey</span>.
+      You didn't build this to become the <span class="signal">bottleneck</span>.
     </h2>
     <p class="lead">
-      You got into it to build things. Now you're the bottleneck. Every quote, every change order, every Friday WIP, every subbie chase — it all comes back to you. Sound familiar?
+      You built it to do good work and make good money. Now every quote, every number, every decision routes back to you. Sound familiar?
     </p>
 
     <div class="pain-grid">
       <div class="pain">
         <div class="pain__num mono">01</div>
-        <div class="pain__title">Quotes take a week. You win the slow ones, lose the good ones.</div>
-        <div class="pain__body">Estimator is buried. Takeoffs are manual. Pricing is in your head. By the time the quote lands, the client has already signed with someone else.</div>
+        <div class="pain__title">Quotes and proposals take too long.</div>
+        <div class="pain__body">You win the slow deals and lose the good ones. Pricing lives in your head. By the time it goes out, the buyer has already moved on.</div>
       </div>
       <div class="pain">
         <div class="pain__num mono">02</div>
-        <div class="pain__title">Variations get done. They don't get billed.</div>
-        <div class="pain__body">Site asks for the change. Crew does it. Nobody writes it up. Two months later you're $40K underwater on a job that looked profitable on paper.</div>
+        <div class="pain__title">Work gets delivered. It never gets billed.</div>
+        <div class="pain__body">Someone asks for more. Your team does it. Nobody writes it up. Months later the job that looked profitable on paper is underwater.</div>
       </div>
       <div class="pain">
         <div class="pain__num mono">03</div>
-        <div class="pain__title">WIP and cash flow built by hand on Sundays.</div>
-        <div class="pain__body">Your bookkeeper sends numbers. Your PM sends numbers. They don't match. You spend half the weekend reconciling them before Monday.</div>
+        <div class="pain__title">Your numbers live in three systems that never agree.</div>
+        <div class="pain__body">Your bookkeeper sends one set. Your ops lead sends another. You spend the weekend reconciling them before Monday.</div>
       </div>
       <div class="pain">
         <div class="pain__num mono">04</div>
-        <div class="pain__title">Subbies don't show. Materials show late.</div>
-        <div class="pain__body">No single schedule. No automatic confirmations. The whole site sits idle for a day because nobody triple-checked. The cost lands on you.</div>
+        <div class="pain__title">Handoffs drop. Things stall.</div>
+        <div class="pain__body">No single source of truth. A deal, a job, a ticket sits idle because nobody chased it. The cost lands on you.</div>
       </div>
       <div class="pain">
         <div class="pain__num mono">05</div>
-        <div class="pain__title">Compliance and insurance paperwork in 14 places.</div>
-        <div class="pain__body">SWMS, inductions, COIs, licences — chased over text, found on someone's phone, missing when you need it. One audit away from a real problem.</div>
+        <div class="pain__title">The answer is always in your head.</div>
+        <div class="pain__body">Your team can't move without you. Every approval, every exception, every client wants you specifically. So you never get out of the work.</div>
       </div>
       <div class="pain">
         <div class="pain__num mono">06</div>
-        <div class="pain__title">If you take two weeks off, the business breaks.</div>
-        <div class="pain__body">Every decision routes through you. Every client wants you. Every site needs your signoff. You haven't had a real holiday in three years and you know it.</div>
+        <div class="pain__title">Take two weeks off and it wobbles.</div>
+        <div class="pain__body">The business runs on you, not on systems. You haven't had a proper break in years and you know it.</div>
       </div>
     </div>
 
     <div class="pull">
       <span class="pull__mark">"</span>
       <p class="pull__text">I'm working harder than I did 10 years ago, the business is bigger, and I'm <span class="signal">less in control</span> than I've ever been.</p>
-      <div class="pull__attr">— every construction owner we've audited</div>
+      <div class="pull__attr">— every owner we've audited</div>
     </div>
   </div>
 </section>
@@ -197,20 +198,20 @@
   <div class="container">
     <div class="section__num">03 · What we do · in plain English</div>
     <h2 class="section__h">
-      We don't sell you software. We onboard an <span class="signal">AI layer</span> into your business — the same way you'd onboard a senior PM.
+      We don't sell you software. We onboard an <span class="signal">AI layer</span> into your business, the way you'd onboard a great senior hire.
     </h2>
     <p class="lead">
-      You don't need to learn anything technical. You don't need to change how you run jobs. You don't need your crew to adopt a new app. We sit beside your operation, load it with everything we'd teach a great new hire, and quietly start running the parts you hate doing.
+      Nothing technical to learn. Nothing for your team to adopt. We sit beside your operation, load it with everything we'd teach a brilliant new hire, and quietly start running the parts you hate doing.
     </p>
 
     <div class="do-grid">
       <div class="do-col">
         <h4 class="do-col__h">What we do</h4>
         <ul class="do-col__list do-col__list--yes">
-          <li>Map how money actually moves through your business — jobs, variations, invoices, payments.</li>
-          <li>Build an AI layer that holds the context — your clients, your subbies, your SOPs, your pricing logic.</li>
-          <li>Plug the biggest leak first. Live in 10 days, not 10 months.</li>
-          <li>Set up your command centre — one place where the right numbers surface at the right time.</li>
+          <li>Map how money actually moves through your business. Sales, delivery, invoicing, cash.</li>
+          <li>Build an AI layer that holds your context. Your clients, suppliers, pricing logic, and SOPs.</li>
+          <li>Plug the biggest leak first. Live in days, not months.</li>
+          <li>Stand up your command centre. The right numbers surface at the right time.</li>
           <li>Stay on monthly to keep it sharp as your business grows.</li>
         </ul>
       </div>
@@ -218,10 +219,10 @@
         <h4 class="do-col__h">What you don't have to do</h4>
         <ul class="do-col__list do-col__list--no">
           <li>Learn new software. The AI works with what you already use.</li>
-          <li>Convince your crew to adopt anything. The system runs in the background.</li>
-          <li>Rip out your accounting, project management, or scheduling tools.</li>
-          <li>Hand over data outside your environment. Your data stays where it is.</li>
-          <li>Become a tech person. You stay an operator. We stay the operator's AI team.</li>
+          <li>Convince your team to adopt anything. The system runs in the background.</li>
+          <li>Rip out your accounting, CRM, or project tools.</li>
+          <li>Send data outside your environment. Your data stays where it is.</li>
+          <li>Become a tech person. You stay the operator. We stay the operator's AI team.</li>
         </ul>
       </div>
     </div>
@@ -240,9 +241,9 @@
       <div class="step">
         <div class="step__head">
           <span class="step__num mono">Day 0–2</span>
-          <h3 class="step__title">The Plug the Leaks audit</h3>
+          <h3 class="step__title">The Profit Leaks Audit</h3>
         </div>
-        <p class="step__body">Two hours with you. We map your operation — quotes, jobs, variations, WIP, subbies, compliance. We find where the money is going and put a real dollar number on each leak. You walk away with a one-page leak report whether you work with us or not.</p>
+        <p class="step__body">A couple of hours with you. We read your real numbers across the four areas: profit, people, process, and pipeline. We put a dollar figure on each leak. You walk away with a one-page leak report whether you work with us or not.</p>
       </div>
 
       <div class="step">
@@ -250,7 +251,7 @@
           <span class="step__num mono">Day 3–10</span>
           <h3 class="step__title">The first leak plugged</h3>
         </div>
-        <p class="step__body">We pick the biggest, fastest leak — usually quotes, variations, or WIP. We build the AI process around it. Loaded with your context. Running inside the tools you already have. Live in 10 days, before any other decision is made.</p>
+        <p class="step__body">We take the biggest, fastest leak and build the AI around it. Loaded with your context. Running inside the tools you already have. Live before any other decision gets made.</p>
       </div>
 
       <div class="step">
@@ -258,7 +259,7 @@
           <span class="step__num mono">Month 1–3</span>
           <h3 class="step__title">The full build</h3>
         </div>
-        <p class="step__body">We work through the rest of the leaks one at a time. End of three months: your AI layer is running the operations that used to run through you. You're working on the business, not in it. The number on the calculator is showing up in your P&amp;L.</p>
+        <p class="step__body">We work through the rest of the leaks one at a time. By the end your AI layer is running the operations that used to run through you. You work on the business, not in it. The number on the calculator starts showing up in your P&amp;L.</p>
       </div>
     </div>
   </div>
@@ -269,24 +270,27 @@
   <div class="container">
     <div class="section__num">05 · Who this is for</div>
     <h2 class="section__h">
-      Built for one kind of business. <span class="signal">Yours.</span>
+      Built for one kind of operator. <span class="signal">The one stuck in the work.</span>
     </h2>
+    <p class="lead">
+      The common thread is never the industry. It's the situation. We've audited property developers, med-spas, recruiters, agencies, professional services firms, trades, and e-commerce operators. The pattern is identical: a proud founder, stuck in the work, sitting on profit they can't see.
+    </p>
 
     <div class="do-grid">
       <div class="do-col">
         <h4 class="do-col__h">A fit if you are</h4>
         <ul class="do-col__list do-col__list--yes">
-          <li>A construction company doing $2M–$10M in annual revenue.</li>
+          <li>An established business doing $2M–$10M in annual revenue.</li>
           <li>Owner-led. The buck stops with you. You can decide on a call.</li>
-          <li>Running 5–60 people across office and site.</li>
-          <li>Already operationally messy enough that you've felt it for years.</li>
+          <li>Running 5–40 people.</li>
+          <li>5+ years trading, so the leaks have had time to set in.</li>
           <li>Ready to stop being the bottleneck and start running it like an asset.</li>
         </ul>
       </div>
       <div class="do-col">
         <h4 class="do-col__h">Not a fit if you</h4>
         <ul class="do-col__list do-col__list--no">
-          <li>Are under $2M — there's not enough operational chaos yet to justify the build.</li>
+          <li>Are under $2M. There isn't enough to recover yet.</li>
           <li>Want to stay hands-on in every decision.</li>
           <li>Want a chatbot, a dashboard, or another app for your team to ignore.</li>
           <li>Need a committee to make a decision.</li>
@@ -297,10 +301,46 @@
   </div>
 </section>
 
-<!-- ===================== OBJECTIONS / FAQ ===================== -->
-<section class="section">
+<!-- ===================== WHO YOU'RE WORKING WITH ===================== -->
+<section id="team" class="section">
   <div class="container">
-    <div class="section__num">06 · The honest questions</div>
+    <div class="section__num">06 · Who you're working with</div>
+    <h2 class="section__h">
+      A small team that's <span class="signal">run businesses</span>, not just built software.
+    </h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step__head">
+          <span class="step__num mono">Finds the leak</span>
+          <h3 class="step__title">Ryan</h3>
+        </div>
+        <p class="step__body">Ryan cut his teeth in real estate and recruitment before moving into coaching founders. He runs your audit. He treats your business like a detective treats a case, and he finds where the money is actually going.</p>
+      </div>
+
+      <div class="step">
+        <div class="step__head">
+          <span class="step__num mono">Makes it land</span>
+          <h3 class="step__title">Ali</h3>
+        </div>
+        <p class="step__body">Ali has been an entrepreneur for over 20 years across multiple sectors. He knows the systems inside a business and the pressure the founder is under. He makes sure what we build delivers the impact you actually wanted.</p>
+      </div>
+
+      <div class="step">
+        <div class="step__head">
+          <span class="step__num mono">Builds it</span>
+          <h3 class="step__title">Andreas</h3>
+        </div>
+        <p class="step__body">Andreas is the coolest nerd you'll ever meet. He's our CTO and has been deep in AI since 2016. He also rides motorbikes and races Ironman. He builds the AI and keeps it running on your stack.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== OBJECTIONS / FAQ ===================== -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section__num">07 · The honest questions</div>
     <h2 class="section__h">
       What every owner asks on the first call.
     </h2>
@@ -308,15 +348,15 @@
     <div class="faq">
       <details class="faq__item">
         <summary class="faq__q">"My business is different."</summary>
-        <div class="faq__a">That's exactly why we don't sell generic AI tools. Every build is shaped around how your specific business runs — your subbies, your clients, your pricing logic, your SOPs. Generic tools give generic outputs. We build around how you actually work.</div>
+        <div class="faq__a">That's exactly why we don't sell generic AI tools. Every build is shaped around how your specific business runs. Your clients, your pricing logic, your SOPs. Generic tools give generic outputs. We build around how you actually work.</div>
       </details>
       <details class="faq__item">
         <summary class="faq__q">"I don't have time to implement this."</summary>
-        <div class="faq__a">We need 2–3 hours of your time in week one. After that we run the build. The system saves you time — it does not cost it. If you can't find 2 hours in a fortnight, this isn't the right time.</div>
+        <div class="faq__a">We need 2–3 hours of your time in week one. After that we run the build. The system gives you time back, it does not cost it. If you can't find 2 hours in a fortnight, this isn't the right moment.</div>
       </details>
       <details class="faq__item">
-        <summary class="faq__q">"What if my crew won't use it?"</summary>
-        <div class="faq__a">They don't have to. The AI layer runs in the background of the tools your team already uses — email, your project management software, your accounting system. We don't ask people to adopt a new app. The adoption problem is the whole reason most software fails on a construction site.</div>
+        <summary class="faq__q">"What if my team won't use it?"</summary>
+        <div class="faq__a">They don't have to. The AI layer runs in the background of the tools your team already uses. Email, your CRM, your accounting system. We don't ask anyone to adopt a new app. That adoption problem is the whole reason most software fails.</div>
       </details>
       <details class="faq__item">
         <summary class="faq__q">"Is my data safe?"</summary>
@@ -324,7 +364,7 @@
       </details>
       <details class="faq__item">
         <summary class="faq__q">"How do I know it'll actually work?"</summary>
-        <div class="faq__a">Because the audit puts a dollar number on the leaks before you sign anything. If we identify $300K of annual leaks and the build costs $20K, the ROI case is made on paper. If we can't find leaks worth more than the build, we tell you straight and refer you elsewhere.</div>
+        <div class="faq__a">Because the audit puts a dollar number on the leaks before you sign anything. If we identify $300K of annual leaks and the build costs $20K, the case is made on paper. If we can't find leaks worth more than the build, we tell you straight and refer you elsewhere.</div>
       </details>
       <details class="faq__item">
         <summary class="faq__q">"I'm not technical."</summary>
@@ -343,12 +383,12 @@
         30 minutes. See the system. <span class="signal">Get your number.</span>
       </h2>
       <p class="book__sub">
-        On the demo we'll show you how SOAP runs inside a construction business like yours, walk through a leak audit from a real client (anonymised), and map out what the first 10 days would look like if we worked together. No deck. No pitch. You'll know whether this is a fit by the end of the call.
+        On the demo we'll show you how SOAP runs inside a business like yours, walk through a leak audit from a real client (anonymised), and map out what the first 10 days would look like if we worked together. No deck. No pitch. You'll know whether this is a fit by the end of the call.
       </p>
 
       <div class="book__actions">
-        <a href="https://calendly.com/soap-demo/30min" target="_blank" rel="noopener" class="btn btn--primary btn--xl">Book your 30-min demo <span class="arrow">→</span></a>
-        <a href="mailto:hello@soap.uk?subject=Construction%20demo%20request" class="btn btn--ghost">Email instead</a>
+        <a href="/audit/" class="btn btn--primary btn--xl">Book your free audit <span class="arrow">→</span></a>
+        <a href="mailto:hello@soap.uk?subject=AI%20audit%20request" class="btn btn--ghost">Email instead</a>
       </div>
 
       <div class="book__meta mono">
@@ -367,7 +407,7 @@
       <div class="footer__tag mono">Simplify Operations. Automate Profit.</div>
     </div>
     <div class="footer__meta mono">
-      Built for construction owners doing $2M–$10M<br>
+      Built for owner-operators doing $2M–$10M · any industry<br>
       hello@soap.uk
     </div>
   </div>
@@ -379,19 +419,21 @@
 (function(){
   const revenueIn = document.getElementById('revenue');
   const teamIn = document.getElementById('team');
-  const jobsIn = document.getElementById('jobs');
-  const marginIn = document.getElementById('margin');
+  const ownerIn = document.getElementById('owner');
+  const chaosIn = document.getElementById('chaos');
 
   const revenueOut = document.getElementById('revenueOut');
   const teamOut = document.getElementById('teamOut');
-  const jobsOut = document.getElementById('jobsOut');
-  const marginOut = document.getElementById('marginOut');
+  const ownerOut = document.getElementById('ownerOut');
+  const chaosOut = document.getElementById('chaosOut');
 
   const leakOut = document.getElementById('leakOut');
   const leakRange = document.getElementById('leakRange');
   const breakdownOut = document.getElementById('breakdownOut');
 
   const chaosLabels = ['Running smooth','Pretty tight','Stretched','Stressed','On fire'];
+  const ownerLabels = ['Lean','Typical','Founder-run'];
+  const ownerFactors = [0.7, 1.0, 1.4];
 
   function fmt(n){
     if(n>=1e6) return '$'+(n/1e6).toFixed(1)+'M';
@@ -402,53 +444,59 @@
     return '$'+Math.round(n).toLocaleString('en-US');
   }
 
+  // Eight leaks, two per SOAP area. Each is a % of revenue at baseline.
+  // People and Process leaks scale with how much runs through the owner and team size.
+  // Tuned so $5M · 20 people · Typical · chaos 3 lands near 6% (~$300K).
+  const buckets = [
+    { area: 'Profit',   label: 'Margin & pricing slippage',          base: 0.011, opSensitive: false },
+    { area: 'Profit',   label: 'Procurement & supplier overpay',     base: 0.007, opSensitive: false },
+    { area: 'People',   label: 'Owner bottleneck on decisions',      base: 0.008, opSensitive: true  },
+    { area: 'People',   label: 'Skilled staff stuck on admin',       base: 0.006, opSensitive: true  },
+    { area: 'Process',  label: 'Manual reporting & reconciliation',  base: 0.006, opSensitive: true  },
+    { area: 'Process',  label: 'Rework & avoidable errors',          base: 0.007, opSensitive: true  },
+    { area: 'Pipeline', label: 'Slow lead response & follow-up',     base: 0.008, opSensitive: false },
+    { area: 'Pipeline', label: 'Dormant database & wasted ad spend', base: 0.007, opSensitive: false }
+  ];
+
   function recalc(){
     const revenue = parseFloat(revenueIn.value) * 1e6;
     const team = parseInt(teamIn.value, 10);
-    const jobs = parseInt(jobsIn.value, 10);
-    const chaos = parseInt(marginIn.value, 10);
+    const ownerIdx = parseInt(ownerIn.value, 10) - 1;
+    const chaos = parseInt(chaosIn.value, 10);
 
     revenueOut.textContent = '$'+parseFloat(revenueIn.value).toFixed(1)+'M';
     teamOut.textContent = team;
-    jobsOut.textContent = jobs;
-    marginOut.textContent = chaosLabels[chaos-1];
+    ownerOut.textContent = ownerLabels[ownerIdx];
+    chaosOut.textContent = chaosLabels[chaos-1];
 
-    // Leak model — five construction-specific buckets, each as % of revenue
-    // tuned so a $5M, 20 person, 8 jobs, chaos 3 lands near 6.2% (~$310K)
-    const chaosBoost = (chaos - 3) * 0.005;       // ±1% across the chaos range
-    const teamBoost  = Math.max(0, (team - 15)) * 0.0003; // bigger team = more coordination leak
-    const jobsBoost  = Math.max(0, (jobs - 6))  * 0.0008; // more concurrent jobs = more scheduling leak
-
-    const buckets = [
-      { label: 'Quoting & estimating · slow turnaround, lost bids',          base: 0.012, jobsW: 0.0002, chaosW: 0.0015 },
-      { label: 'Unbilled variations & change orders',                          base: 0.015, jobsW: 0.0006, chaosW: 0.0010 },
-      { label: 'Project margin erosion · rework, scope creep, hidden hours',   base: 0.012, jobsW: 0.0004, chaosW: 0.0020 },
-      { label: 'Subcontractor & scheduling coordination',                      base: 0.008, jobsW: 0.0005, chaosW: 0.0008 },
-      { label: 'Manual WIP, reporting, owner-as-bottleneck',                   base: 0.010, jobsW: 0.0002, chaosW: 0.0010 }
-    ];
+    const chaosMult = 1 + (chaos - 3) * 0.10;                 // ±20% across the chaos range
+    const ownerMult = ownerFactors[ownerIdx];                 // 0.7 / 1.0 / 1.4
+    const teamMult  = 1 + Math.max(0, (team - 15)) * 0.004;   // bigger team = more coordination leak
 
     let total = 0;
     const rows = buckets.map(b => {
-      const pct = b.base + (jobs - 6) * Math.max(0, b.jobsW) + (chaos - 3) * b.chaosW + teamBoost/5;
-      const cleanPct = Math.max(0.004, pct);
-      const dollars = revenue * cleanPct;
+      let mult = chaosMult;
+      if(b.opSensitive) mult *= ownerMult * teamMult;
+      const dollars = revenue * b.base * mult;
       total += dollars;
-      return { label: b.label, pct: cleanPct, dollars };
+      return { area: b.area, label: b.label, dollars: dollars };
     });
+
+    const maxD = Math.max.apply(null, rows.map(r => r.dollars));
 
     leakOut.textContent = fmtFull(total);
     leakRange.textContent = 'range · ' + fmt(total*0.82) + ' – ' + fmt(total*1.18) + ' · ~' + ((total/revenue)*100).toFixed(1) + '% of revenue';
 
     breakdownOut.innerHTML = rows.map(r => `
       <div class="bd__row">
-        <div class="bd__bar"><div class="bd__bar-fill" style="width:${Math.min(100, r.pct*100*8)}%"></div></div>
-        <div class="bd__label">${r.label}</div>
+        <div class="bd__bar"><div class="bd__bar-fill" style="width:${Math.max(8, (r.dollars/maxD)*100)}%"></div></div>
+        <div class="bd__label"><span class="signal mono" style="font-size:10px; letter-spacing:0.12em; text-transform:uppercase;">${r.area}</span><br>${r.label}</div>
         <div class="bd__value mono">${fmtFull(r.dollars)}</div>
       </div>
     `).join('');
   }
 
-  [revenueIn, teamIn, jobsIn, marginIn].forEach(el => el.addEventListener('input', recalc));
+  [revenueIn, teamIn, ownerIn, chaosIn].forEach(el => el.addEventListener('input', recalc));
   recalc();
 })();
 </script>

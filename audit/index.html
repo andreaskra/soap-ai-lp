@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Book your free Profit Leaks Audit — SOAP</title>
+<meta name="description" content="Book your free Profit Leaks Audit. 30 minutes. We read your real numbers and put a dollar figure on what your business is quietly leaking. You keep the report whether you work with us or not." />
+<meta property="og:title" content="Book your free Profit Leaks Audit — SOAP" />
+<meta property="og:description" content="30 minutes. Your numbers. A one-page report on exactly what your business is leaking. Free, no obligation." />
+<meta name="robots" content="index,follow" />
+
+<link rel="icon" type="image/svg+xml" href="../assets/logo/favicon.svg" />
+<link rel="apple-touch-icon" href="../assets/logo/apple-touch-icon.svg" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../styles.css" />
+
+<style>
+  /* ---- /audit page-specific layout (uses tokens from styles.css) ---- */
+  .audit-bar{
+    position: sticky; top:0; z-index:50;
+    background: rgba(10,14,20,0.86); backdrop-filter: blur(10px);
+    border-bottom: var(--hair);
+  }
+  .audit-bar__inner{
+    max-width: var(--maxw); margin:0 auto; padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .audit-bar__back{font-family:var(--mono); font-size:12px; letter-spacing:0.06em; color:var(--mist);}
+  .audit-bar__back:hover{color:var(--bone);}
+
+  .audit-hero{padding: 56px 0 40px;}
+  .audit-grid{
+    display:grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items:start;
+  }
+  .audit-hero__title{
+    font-family:var(--display); font-weight:600;
+    font-size: clamp(34px, 4.4vw, 56px); line-height:1.05; letter-spacing:-0.035em;
+    margin-top: 20px; max-width: 16ch;
+  }
+  .audit-hero__sub{margin-top: 22px; font-size:17px; line-height:1.55; color:var(--bone-mute); max-width:54ch;}
+
+  .checklist{list-style:none; margin:28px 0 0; padding:0; display:flex; flex-direction:column; gap:14px;}
+  .checklist li{position:relative; padding-left:30px; font-size:15px; color:var(--bone); line-height:1.45;}
+  .checklist li::before{
+    content:"✓"; position:absolute; left:0; top:-1px;
+    font-family:var(--mono); color:var(--signal); font-weight:500;
+  }
+
+  .audit-trust{
+    margin-top: 30px; display:flex; flex-wrap:wrap; gap:10px 22px;
+    font-family:var(--mono); font-size:12px; letter-spacing:0.04em; color:var(--mist);
+  }
+  .audit-trust span{display:inline-flex; align-items:center; gap:8px;}
+  .audit-trust span::before{content:""; width:6px; height:6px; background:var(--signal); border-radius:1px;}
+
+  /* Booking panel (inline Cal embed lives here) */
+  .booking{
+    background: var(--slate); border:1px solid var(--signal); border-radius: var(--radius);
+    padding: 10px; position: sticky; top: 84px; min-height: 560px;
+  }
+  .booking__head{
+    padding: 14px 14px 8px; font-family:var(--mono); font-size:11px;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--bone-mute);
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .booking__head .free{color:var(--signal);}
+  #cal-inline{width:100%; min-height:560px; overflow:auto; border-radius:4px;}
+  .booking__fallback{padding:16px; text-align:center;}
+
+  @media (max-width: 920px){
+    .audit-grid{grid-template-columns:1fr; gap:36px;}
+    .booking{position:static; top:auto;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== MINIMAL BAR (one job: book) ===================== -->
+<header class="audit-bar">
+  <div class="audit-bar__inner">
+    <a href="/" class="topbar__brand"><span class="wm">SOAP<span class="wm-pip"></span></span></a>
+    <a href="/" class="audit-bar__back">← soap-ai.com</a>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================== HERO + BOOKING ===================== -->
+<section class="audit-hero">
+  <div class="container">
+    <div class="audit-grid">
+
+      <div>
+        <span class="eyebrow"><span class="pip"></span>Free · 30 minutes · no obligation</span>
+        <h1 class="audit-hero__title">Find out exactly what your business is <span class="signal">leaking</span>.</h1>
+        <p class="audit-hero__sub">
+          Book your Profit Leaks Audit. We read your real numbers across the four areas every business leaks money through, and put a dollar figure on each one. You keep the one-page report whether you work with us or not.
+        </p>
+
+        <ul class="checklist">
+          <li>A real dollar figure on what's leaking, broken down by profit, people, process, and pipeline.</li>
+          <li>The single biggest leak, and what plugging it with AI would be worth this year.</li>
+          <li>A one-page leak report to keep. Yours either way.</li>
+          <li>No deck. No pitch. If there's nothing worth recovering, we tell you straight.</li>
+        </ul>
+
+        <div class="audit-trust">
+          <span>For owner-operators $2M–$10M</span>
+          <span>Any industry</span>
+          <span>Non-technical</span>
+          <span>$0 to attend</span>
+        </div>
+      </div>
+
+      <div class="booking" id="book-cal">
+        <div class="booking__head">
+          <span>Pick a time</span>
+          <span class="free">Free audit</span>
+        </div>
+        <!-- =================================================================
+             GHL CALENDAR SLOT — wire up tomorrow (Ryan connecting via MCP).
+             Drop the HighLevel booking widget in place of .booking__fallback:
+               <iframe src="https://api.leadconnectorhq.com/widget/booking/SLUG"
+                       style="width:100%;height:620px;border:none;overflow:hidden"
+                       scrolling="no" id="ghl-booking"></iframe>
+               <script src="https://link.msgsndr.com/js/embed.js" type="text/javascript"></script>
+             Then delete this fallback block. Keep #book-cal id (final CTA scrolls here).
+        ================================================================= -->
+        <div id="cal-inline">
+          <div class="booking__fallback">
+            <p class="calc__note" style="margin-top:0; font-size:14px; color:var(--bone-mute);">Booking opens here.</p>
+            <a href="mailto:hello@soap.uk?subject=AI%20audit%20request" class="btn btn--primary btn--lg" style="margin-top:14px;">Request your audit time <span class="arrow">→</span></a>
+            <p class="calc__note">Reply to the same address and we'll lock in a slot. The live calendar goes in here shortly.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHAT HAPPENS ON THE CALL ===================== -->
+<section class="section">
+  <div class="container">
+    <div class="section__num">What happens on the call</div>
+    <h2 class="section__h">30 minutes. Three things. <span class="signal">Then you decide.</span></h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step__head"><span class="step__num mono">01</span><h3 class="step__title">We read your numbers</h3></div>
+        <p class="step__body">You tell us how the business runs and roughly what the numbers look like. We map it across profit, people, process, and pipeline. This is a conversation, not a form.</p>
+      </div>
+      <div class="step">
+        <div class="step__head"><span class="step__num mono">02</span><h3 class="step__title">We find the leaks</h3></div>
+        <p class="step__body">We show you where the money is quietly going and put a dollar figure on each leak. Most businesses your size are leaking 4–8% of revenue without seeing it.</p>
+      </div>
+      <div class="step">
+        <div class="step__head"><span class="step__num mono">03</span><h3 class="step__title">You get the report</h3></div>
+        <p class="step__body">You walk away with a one-page leak report. If plugging the biggest leak is worth far more than the build, we'll show you how that works. If it isn't, we'll say so.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHO IT'S FOR (QUICK QUALIFIER) ===================== -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section__num">Before you book</div>
+    <h2 class="section__h">This is worth your time if <span class="signal">this is you</span>.</h2>
+    <div class="do-grid">
+      <div class="do-col">
+        <h4 class="do-col__h">Book the audit if you are</h4>
+        <ul class="do-col__list do-col__list--yes">
+          <li>An established business doing $2M–$10M, 5+ years trading.</li>
+          <li>Owner-led, and you can make a decision on a call.</li>
+          <li>Running 5–40 people across any industry.</li>
+          <li>Sick of being the bottleneck every decision routes through.</li>
+        </ul>
+      </div>
+      <div class="do-col">
+        <h4 class="do-col__h">Don't book if you</h4>
+        <ul class="do-col__list do-col__list--no">
+          <li>Are under $2M. There isn't enough to recover yet.</li>
+          <li>Just want a chatbot or another dashboard.</li>
+          <li>Need a committee to make a call.</li>
+          <li>Can't give 2–3 hours in the first fortnight if we work together.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--
+  ===================== PROOF SLOT (EMPTY ON PURPOSE) =====================
+  No real testimonials exist yet, so nothing is rendered here.
+  When Ali supplies proof, drop it in as a section above the final CTA.
+  What converts best on a booking page, in priority order:
+    1. 1–2 short outcome quotes with NAME + COMPANY + a number
+       e.g. "SOAP found $240K we were losing on unbilled work. — James R., Phoenix"
+    2. A single anonymised before/after from the Phoenix audit (real, in the folder).
+    3. Logos of businesses audited (even "audited", not "client").
+    4. A one-line founder credibility stat (years operating, businesses run).
+  Render with .pull (single quote) or a 2-col grid of .pain cards.
+  ========================================================================
+-->
+
+<!-- ===================== FINAL CTA ===================== -->
+<section class="section section--book">
+  <div class="container">
+    <div class="book">
+      <span class="eyebrow"><span class="pip"></span>The next step</span>
+      <h2 class="book__h">Your numbers. Your leak report. <span class="signal">Free.</span></h2>
+      <p class="book__sub">Worst case, you spend 30 minutes and walk away knowing exactly where your business is losing money, with a report to prove it. Best case, we plug the first leak and it pays for itself many times over.</p>
+      <div class="book__actions">
+        <a href="#book-cal" class="btn btn--primary btn--xl">Book your free audit <span class="arrow">→</span></a>
+        <a href="mailto:hello@soap.uk?subject=AI%20audit%20request" class="btn btn--ghost">Email instead</a>
+      </div>
+      <div class="book__meta mono">
+        <div><span class="lbl">format</span> 30 minutes · video call</div>
+        <div><span class="lbl">cost</span> $0 · no obligation</div>
+        <div><span class="lbl">outcome</span> A leak report, kept either way</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <span class="wm">SOAP<span class="wm-pip"></span></span>
+      <div class="footer__tag mono">Simplify Operations. Automate Profit.</div>
+    </div>
+    <div class="footer__meta mono">
+      Built for owner-operators doing $2M–$10M · any industry<br>
+      hello@soap.uk
+    </div>
+  </div>
+</footer>
+
+</main>
+
+<!-- Booking embed (GHL via MCP) gets wired into #cal-inline tomorrow. No third-party script today. -->
+
+</body>
+</html>
