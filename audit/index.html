@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Book your free Profit Leaks Audit — SOAP</title>
-<meta name="description" content="Book your free Profit Leaks Audit. 30 minutes. We read your real numbers and put a dollar figure on what your business is quietly leaking. You keep the report whether you work with us or not." />
+<meta name="description" content="30 minutes. Your numbers. A one-page report on exactly what your business is leaking. Free, no obligation." />
 <meta property="og:title" content="Book your free Profit Leaks Audit — SOAP" />
 <meta property="og:description" content="30 minutes. Your numbers. A one-page report on exactly what your business is leaking. Free, no obligation." />
 <meta name="robots" content="index,follow" />
@@ -14,72 +14,97 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="../styles.css" />
 
 <style>
-  /* ---- /audit page-specific layout (uses tokens from styles.css) ---- */
-  .audit-bar{
-    position: sticky; top:0; z-index:50;
-    background: rgba(10,14,20,0.86); backdrop-filter: blur(10px);
-    border-bottom: var(--hair);
-  }
-  .audit-bar__inner{
-    max-width: var(--maxw); margin:0 auto; padding:14px 24px;
-    display:flex; align-items:center; justify-content:space-between;
-  }
+  /* ---- /audit — ADHD-friendly booking page. Narrow, scannable, varied. ---- */
+  .audit-bar{position:sticky; top:0; z-index:50; background:rgba(10,14,20,0.9); backdrop-filter:blur(10px); border-bottom:var(--hair);}
+  .audit-bar__inner{max-width:1080px; margin:0 auto; padding:13px 24px; display:flex; align-items:center; justify-content:space-between;}
   .audit-bar__back{font-family:var(--mono); font-size:12px; letter-spacing:0.06em; color:var(--mist);}
   .audit-bar__back:hover{color:var(--bone);}
 
-  .audit-hero{padding: 56px 0 40px;}
-  .audit-grid{
-    display:grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items:start;
-  }
-  .audit-hero__title{
-    font-family:var(--display); font-weight:600;
-    font-size: clamp(34px, 4.4vw, 56px); line-height:1.05; letter-spacing:-0.035em;
-    margin-top: 20px; max-width: 16ch;
-  }
-  .audit-hero__sub{margin-top: 22px; font-size:17px; line-height:1.55; color:var(--bone-mute); max-width:54ch;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+  .narrow{max-width:680px;}
 
-  .checklist{list-style:none; margin:28px 0 0; padding:0; display:flex; flex-direction:column; gap:14px;}
-  .checklist li{position:relative; padding-left:30px; font-size:15px; color:var(--bone); line-height:1.45;}
-  .checklist li::before{
-    content:"✓"; position:absolute; left:0; top:-1px;
-    font-family:var(--mono); color:var(--signal); font-weight:500;
-  }
+  /* HERO */
+  .ah{padding:52px 0 40px;}
+  .ah-grid{display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:start;}
+  .ah h1{font-family:var(--display); font-weight:800; font-size:clamp(36px,5vw,58px); line-height:1.02; letter-spacing:-0.04em; margin-top:18px; max-width:13ch;}
+  .ah h1 em{color:var(--signal);}
+  .ah-sub{margin-top:20px; font-size:17px; line-height:1.5; color:var(--bone-mute); max-width:46ch;}
+  .ah-sub b{color:var(--bone); font-weight:600;}
 
-  .audit-trust{
-    margin-top: 30px; display:flex; flex-wrap:wrap; gap:10px 22px;
-    font-family:var(--mono); font-size:12px; letter-spacing:0.04em; color:var(--mist);
-  }
-  .audit-trust span{display:inline-flex; align-items:center; gap:8px;}
-  .audit-trust span::before{content:""; width:6px; height:6px; background:var(--signal); border-radius:1px;}
+  /* skim list — bold lead, grey tail */
+  .skim{list-style:none; margin:26px 0 0; padding:0; display:flex; flex-direction:column; gap:16px;}
+  .skim li{position:relative; padding-left:30px; font-size:15px; color:var(--bone-mute); line-height:1.4;}
+  .skim li::before{content:""; position:absolute; left:0; top:7px; width:14px; height:14px; border-radius:50%; border:2px solid var(--signal);}
+  .skim b{display:block; color:var(--bone); font-weight:600; font-size:15.5px; margin-bottom:1px;}
 
-  /* Booking panel (inline Cal embed lives here) */
-  .booking{
-    background: var(--slate); border:1px solid var(--signal); border-radius: var(--radius);
-    padding: 10px; position: sticky; top: 84px; min-height: 560px;
-  }
-  .booking__head{
-    padding: 14px 14px 8px; font-family:var(--mono); font-size:11px;
-    letter-spacing:0.14em; text-transform:uppercase; color:var(--bone-mute);
-    display:flex; justify-content:space-between; align-items:center;
-  }
-  .booking__head .free{color:var(--signal);}
-  #cal-inline{width:100%; min-height:560px; overflow:auto; border-radius:4px;}
-  .booking__fallback{padding:16px; text-align:center;}
+  .chips{margin-top:28px; display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{font-family:var(--mono); font-size:11px; letter-spacing:0.04em; color:var(--bone-mute); border:1px solid var(--carbon); border-radius:999px; padding:6px 12px;}
 
-  @media (max-width: 920px){
-    .audit-grid{grid-template-columns:1fr; gap:36px;}
-    .booking{position:static; top:auto;}
+  /* Booking panel = the one focal point */
+  .book-panel{background:var(--slate); border:1px solid var(--signal); border-radius:8px; padding:8px; position:sticky; top:80px; box-shadow:0 0 0 4px rgba(214,238,92,0.06);}
+  .book-panel__head{padding:14px 16px 10px; display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--bone-mute);}
+  .book-panel__head .free{color:var(--signal);}
+  #cal-inline{min-height:520px;}
+  .book-fallback{padding:26px 18px 22px; text-align:center;}
+  .book-fallback .btn{width:100%; justify-content:center;}
+
+  /* stat band — different shape, breaks the rhythm */
+  .band{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--carbon); border:var(--hair); border-radius:var(--radius); overflow:hidden;}
+  .band div{background:var(--slate); padding:22px 20px; text-align:center;}
+  .band .n{font-family:var(--mono); font-size:30px; color:var(--signal); font-weight:500; letter-spacing:-0.02em;}
+  .band .t{margin-top:6px; font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--mist);}
+
+  /* flow — 3 quick beats, bold-led */
+  .flow{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  .flow .beat{}
+  .flow .step-n{font-family:var(--mono); font-size:11px; letter-spacing:0.14em; color:var(--signal);}
+  .flow .beat b{display:block; font-family:var(--display); font-weight:600; font-size:19px; letter-spacing:-0.02em; color:var(--bone); margin:8px 0 6px;}
+  .flow .beat p{font-size:14px; color:var(--bone-mute); line-height:1.5;}
+
+  /* mini qualifier — two tight columns */
+  .qual{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--carbon); border:var(--hair); border-radius:var(--radius); overflow:hidden;}
+  .qual .col{background:var(--slate); padding:26px 24px;}
+  .qual h4{font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--mist); margin-bottom:16px;}
+  .qual ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:11px;}
+  .qual li{font-size:14.5px; color:var(--bone-mute); line-height:1.4; padding-left:22px; position:relative;}
+  .qual .yes li::before{content:"✓"; position:absolute; left:0; color:var(--signal); font-family:var(--mono);}
+  .qual .no li::before{content:"✕"; position:absolute; left:0; color:var(--mist); font-family:var(--mono);}
+
+  /* risk-reversal callout — accent box, draws the eye */
+  .callout{border:1px solid rgba(214,238,92,0.3); border-left:3px solid var(--signal); background:rgba(214,238,92,0.04); border-radius:6px; padding:26px 28px;}
+  .callout p{font-size:18px; line-height:1.55; color:var(--bone-mute); max-width:60ch;}
+  .callout b{color:var(--bone); font-weight:600;}
+  .callout .win{color:var(--signal); font-weight:600;}
+
+  /* final CTA */
+  .fin{text-align:center; padding:8px 0 0;}
+  .fin h2{font-family:var(--display); font-weight:800; font-size:clamp(30px,4vw,46px); letter-spacing:-0.03em; line-height:1.05;}
+  .fin h2 em{color:var(--signal);}
+  .fin p{margin:14px auto 0; max-width:42ch; color:var(--bone-mute); font-size:15px;}
+  .fin .btn{margin-top:24px;}
+
+  .rule{height:1px; background:var(--carbon); margin:64px 0;}
+  .seclabel{font-family:var(--mono); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--mist); margin-bottom:18px; display:flex; align-items:center; gap:10px;}
+  .seclabel::before{content:""; width:24px; height:1px; background:var(--signal);}
+  .sech{font-family:var(--display); font-weight:700; font-size:clamp(26px,3.4vw,40px); letter-spacing:-0.03em; line-height:1.08; max-width:18ch;}
+  .sech em{color:var(--signal);}
+
+  @media (max-width:880px){
+    .ah-grid{grid-template-columns:1fr; gap:32px;}
+    .book-panel{position:static;}
+    .flow{grid-template-columns:1fr;}
+    .qual{grid-template-columns:1fr;}
+    .band .n{font-size:24px;}
   }
 </style>
 </head>
 <body>
 
-<!-- ===================== MINIMAL BAR (one job: book) ===================== -->
 <header class="audit-bar">
   <div class="audit-bar__inner">
     <a href="/" class="topbar__brand"><span class="wm">SOAP<span class="wm-pip"></span></span></a>
@@ -89,155 +114,126 @@
 
 <main>
 
-<!-- ===================== HERO + BOOKING ===================== -->
-<section class="audit-hero">
-  <div class="container">
-    <div class="audit-grid">
-
+<!-- HERO: copy left, calendar (the focal point) right -->
+<section class="ah">
+  <div class="wrap">
+    <div class="ah-grid">
       <div>
         <span class="eyebrow"><span class="pip"></span>Free · 30 minutes · no obligation</span>
-        <h1 class="audit-hero__title">Find out exactly what your business is <span class="signal">leaking</span>.</h1>
-        <p class="audit-hero__sub">
-          Book your Profit Leaks Audit. We read your real numbers across the four areas every business leaks money through, and put a dollar figure on each one. You keep the one-page report whether you work with us or not.
-        </p>
+        <h1>See exactly what your business is <em>leaking</em>.</h1>
+        <p class="ah-sub">Book your Profit Leaks Audit. We read your real numbers and put a <b>dollar figure</b> on what's quietly walking out the door.</p>
 
-        <ul class="checklist">
-          <li>A real dollar figure on what's leaking, broken down by profit, people, process, and pipeline.</li>
-          <li>The single biggest leak, and what plugging it with AI would be worth this year.</li>
-          <li>A one-page leak report to keep. Yours either way.</li>
-          <li>No deck. No pitch. If there's nothing worth recovering, we tell you straight.</li>
+        <ul class="skim">
+          <li><b>A real number.</b> What you're leaking, broken down by area.</li>
+          <li><b>The biggest leak.</b> And what plugging it is worth this year.</li>
+          <li><b>A one-page report.</b> Yours to keep, whether we work together or not.</li>
         </ul>
 
-        <div class="audit-trust">
-          <span>For owner-operators $2M–$10M</span>
-          <span>Any industry</span>
-          <span>Non-technical</span>
-          <span>$0 to attend</span>
+        <div class="chips">
+          <span class="chip">Owner-operators $2M–$10M</span>
+          <span class="chip">Any industry</span>
+          <span class="chip">Non-technical</span>
         </div>
       </div>
 
-      <div class="booking" id="book-cal">
-        <div class="booking__head">
-          <span>Pick a time</span>
-          <span class="free">Free audit</span>
-        </div>
+      <div class="book-panel" id="book-cal">
+        <div class="book-panel__head"><span>Pick a time</span><span class="free">Free</span></div>
         <!-- =================================================================
              GHL CALENDAR SLOT — wire up tomorrow (Ryan connecting via MCP).
-             Drop the HighLevel booking widget in place of .booking__fallback:
+             Replace the .book-fallback block below with the HighLevel widget:
                <iframe src="https://api.leadconnectorhq.com/widget/booking/SLUG"
-                       style="width:100%;height:620px;border:none;overflow:hidden"
+                       style="width:100%;height:560px;border:none;overflow:hidden"
                        scrolling="no" id="ghl-booking"></iframe>
-               <script src="https://link.msgsndr.com/js/embed.js" type="text/javascript"></script>
-             Then delete this fallback block. Keep #book-cal id (final CTA scrolls here).
+               <script src="https://link.msgsndr.com/js/embed.js"></script>
+             Keep id="book-cal" on the panel (CTAs scroll here).
         ================================================================= -->
         <div id="cal-inline">
-          <div class="booking__fallback">
-            <p class="calc__note" style="margin-top:0; font-size:14px; color:var(--bone-mute);">Booking opens here.</p>
-            <a href="mailto:hello@soap.uk?subject=AI%20audit%20request" class="btn btn--primary btn--lg" style="margin-top:14px;">Request your audit time <span class="arrow">→</span></a>
-            <p class="calc__note">Reply to the same address and we'll lock in a slot. The live calendar goes in here shortly.</p>
+          <div class="book-fallback">
+            <p style="font-size:14px; color:var(--bone-mute); margin-bottom:16px;">Calendar opens here.</p>
+            <a href="mailto:hello@soap.uk?subject=AI%20audit%20request" class="btn btn--primary btn--lg">Request your time <span class="arrow">→</span></a>
+            <p style="font-size:12px; color:var(--mist); margin-top:12px;">We'll lock in a slot by reply.</p>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ===================== WHAT HAPPENS ON THE CALL ===================== -->
-<section class="section">
-  <div class="container">
-    <div class="section__num">What happens on the call</div>
-    <h2 class="section__h">30 minutes. Three things. <span class="signal">Then you decide.</span></h2>
+<!-- STAT BAND: breaks the rhythm, fast credibility -->
+<div class="wrap">
+  <div class="band">
+    <div><div class="n">30 min</div><div class="t">The whole call</div></div>
+    <div><div class="n">$0</div><div class="t">To attend</div></div>
+    <div><div class="n">1 page</div><div class="t">Report you keep</div></div>
+  </div>
+</div>
 
-    <div class="steps">
-      <div class="step">
-        <div class="step__head"><span class="step__num mono">01</span><h3 class="step__title">We read your numbers</h3></div>
-        <p class="step__body">You tell us how the business runs and roughly what the numbers look like. We map it across profit, people, process, and pipeline. This is a conversation, not a form.</p>
-      </div>
-      <div class="step">
-        <div class="step__head"><span class="step__num mono">02</span><h3 class="step__title">We find the leaks</h3></div>
-        <p class="step__body">We show you where the money is quietly going and put a dollar figure on each leak. Most businesses your size are leaking 4–8% of revenue without seeing it.</p>
-      </div>
-      <div class="step">
-        <div class="step__head"><span class="step__num mono">03</span><h3 class="step__title">You get the report</h3></div>
-        <p class="step__body">You walk away with a one-page leak report. If plugging the biggest leak is worth far more than the build, we'll show you how that works. If it isn't, we'll say so.</p>
-      </div>
+<div class="rule"></div>
+
+<!-- WHAT HAPPENS: 3 quick beats, bold-led -->
+<div class="wrap">
+  <div class="seclabel">What happens</div>
+  <h2 class="sech">30 minutes. Three things. <em>Then you decide.</em></h2>
+  <div class="flow" style="margin-top:36px;">
+    <div class="beat"><div class="step-n">01</div><b>You talk, we map.</b><p>No forms. A straight conversation about how the business actually runs.</p></div>
+    <div class="beat"><div class="step-n">02</div><b>We find the leaks.</b><p>Live, across profit, people, process, and pipeline. Most your size leak 4–8% of revenue.</p></div>
+    <div class="beat"><div class="step-n">03</div><b>You get the report.</b><p>One page. Real numbers. Yours either way.</p></div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<!-- QUALIFIER -->
+<div class="wrap">
+  <div class="seclabel">Before you book</div>
+  <h2 class="sech">Worth your time if <em>this is you</em>.</h2>
+  <div class="qual" style="margin-top:32px;">
+    <div class="col">
+      <h4>Book it if you are</h4>
+      <ul class="yes">
+        <li>Doing $2M–$10M, 5+ years trading.</li>
+        <li>Owner-led. You can decide on a call.</li>
+        <li>Sick of being the bottleneck.</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h4>Skip it if you</h4>
+      <ul class="no">
+        <li>Are under $2M. Not enough to recover yet.</li>
+        <li>Just want a chatbot or a dashboard.</li>
+        <li>Need a committee to make a call.</li>
+      </ul>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ===================== WHO IT'S FOR (QUICK QUALIFIER) ===================== -->
-<section class="section section--alt">
-  <div class="container">
-    <div class="section__num">Before you book</div>
-    <h2 class="section__h">This is worth your time if <span class="signal">this is you</span>.</h2>
-    <div class="do-grid">
-      <div class="do-col">
-        <h4 class="do-col__h">Book the audit if you are</h4>
-        <ul class="do-col__list do-col__list--yes">
-          <li>An established business doing $2M–$10M, 5+ years trading.</li>
-          <li>Owner-led, and you can make a decision on a call.</li>
-          <li>Running 5–40 people across any industry.</li>
-          <li>Sick of being the bottleneck every decision routes through.</li>
-        </ul>
-      </div>
-      <div class="do-col">
-        <h4 class="do-col__h">Don't book if you</h4>
-        <ul class="do-col__list do-col__list--no">
-          <li>Are under $2M. There isn't enough to recover yet.</li>
-          <li>Just want a chatbot or another dashboard.</li>
-          <li>Need a committee to make a call.</li>
-          <li>Can't give 2–3 hours in the first fortnight if we work together.</li>
-        </ul>
-      </div>
-    </div>
+<div class="rule"></div>
+
+<!-- RISK REVERSAL CALLOUT -->
+<div class="wrap narrow">
+  <div class="callout">
+    <p><b>Worst case:</b> you spend 30 minutes and walk away knowing exactly where your money is going, with a report to prove it. <b>Best case:</b> we plug the first leak and it pays for itself many times over. <span class="win">Either way, you come out ahead.</span></p>
   </div>
-</section>
+</div>
 
-<!--
-  ===================== PROOF SLOT (EMPTY ON PURPOSE) =====================
-  No real testimonials exist yet, so nothing is rendered here.
-  When Ali supplies proof, drop it in as a section above the final CTA.
-  What converts best on a booking page, in priority order:
-    1. 1–2 short outcome quotes with NAME + COMPANY + a number
-       e.g. "SOAP found $240K we were losing on unbilled work. — James R., Phoenix"
-    2. A single anonymised before/after from the Phoenix audit (real, in the folder).
-    3. Logos of businesses audited (even "audited", not "client").
-    4. A one-line founder credibility stat (years operating, businesses run).
-  Render with .pull (single quote) or a 2-col grid of .pain cards.
-  ========================================================================
--->
+<div class="rule"></div>
 
-<!-- ===================== FINAL CTA ===================== -->
-<section class="section section--book">
-  <div class="container">
-    <div class="book">
-      <span class="eyebrow"><span class="pip"></span>The next step</span>
-      <h2 class="book__h">Your numbers. Your leak report. <span class="signal">Free.</span></h2>
-      <p class="book__sub">Worst case, you spend 30 minutes and walk away knowing exactly where your business is losing money, with a report to prove it. Best case, we plug the first leak and it pays for itself many times over.</p>
-      <div class="book__actions">
-        <a href="#book-cal" class="btn btn--primary btn--xl">Book your free audit <span class="arrow">→</span></a>
-        <a href="mailto:hello@soap.uk?subject=AI%20audit%20request" class="btn btn--ghost">Email instead</a>
-      </div>
-      <div class="book__meta mono">
-        <div><span class="lbl">format</span> 30 minutes · video call</div>
-        <div><span class="lbl">cost</span> $0 · no obligation</div>
-        <div><span class="lbl">outcome</span> A leak report, kept either way</div>
-      </div>
-    </div>
+<!-- FINAL CTA -->
+<div class="wrap">
+  <div class="fin">
+    <h2>Your numbers. Your leak report. <em>Free.</em></h2>
+    <p>Pick a time at the top. 30 minutes. That's the whole ask.</p>
+    <a href="#book-cal" class="btn btn--primary btn--xl">Book your free audit <span class="arrow">→</span></a>
   </div>
-</section>
+</div>
 
-<footer class="footer">
-  <div class="container footer__inner">
+<footer class="footer" style="margin-top:64px;">
+  <div class="wrap footer__inner">
     <div class="footer__brand">
       <span class="wm">SOAP<span class="wm-pip"></span></span>
       <div class="footer__tag mono">Simplify Operations. Automate Profit.</div>
     </div>
-    <div class="footer__meta mono">
-      Built for owner-operators doing $2M–$10M · any industry<br>
-      hello@soap.uk
-    </div>
+    <div class="footer__meta mono">Owner-operators $2M–$10M · any industry<br>hello@soap.uk</div>
   </div>
 </footer>
 
