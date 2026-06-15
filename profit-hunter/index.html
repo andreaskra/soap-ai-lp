@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Find your profit leak | SOAP</title>
+<meta name="description" content="8 questions. 90 seconds. Find out how much profit is leaking from your business — broken down by Pipeline, Profit, People and Processes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A0E14; --ink2:#0E1218; --slate:#131922; --carbon:#1E2530; --steel:#2A3340;
+  --bone:#EFEAE0; --mute:#B5B0A7; --mist:#7C8693;
+  --lime:#D6EE5C; --lime2:#B8CC44;
+  --d:'Inter Tight',system-ui,sans-serif;
+  --m:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--bone);font-family:var(--d);-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:900;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.011) 0 1px,transparent 1px 3px);opacity:.55;}
+
+.wrap{max-width:680px;margin:0 auto;padding:0 22px;min-height:100vh;display:flex;flex-direction:column;}
+
+/* nav */
+nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0 0;}
+.logo{font-family:var(--m);font-weight:700;font-size:13px;letter-spacing:.32em;display:flex;align-items:center;gap:10px;}
+.logo .sq{width:8px;height:8px;background:var(--lime);}
+.nav-tag{font-family:var(--m);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mist);}
+
+/* progress */
+.prog{height:2px;background:var(--carbon);margin:20px 0 0;overflow:hidden;display:none;}
+.prog.on{display:block;}
+.prog .fill{height:100%;background:var(--lime);transition:width .4s cubic-bezier(.6,0,.2,1);width:0;}
+
+/* stage */
+.stage{flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 0 56px;}
+.screen{display:none;flex-direction:column;}
+.screen.on{display:flex;}
+.screen.fade{animation:fu .32s ease forwards;}
+@keyframes fu{from{opacity:0;transform:translateY(9px);}to{opacity:1;transform:none;}}
+
+/* shared */
+.eyebrow{font-family:var(--m);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mist);display:flex;align-items:center;gap:9px;}
+.dot{width:6px;height:6px;background:var(--lime);border-radius:50%;animation:blink 1.8s ease-in-out infinite;flex:0 0 auto;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.25;}}
+
+/* landing */
+h1{font-weight:800;font-size:clamp(32px,6.5vw,60px);letter-spacing:-.045em;line-height:1.0;margin:18px 0 0;}
+h1 .hi{color:var(--lime);}
+.lead{color:var(--mute);font-size:clamp(14px,1.8vw,17px);line-height:1.6;margin:18px 0 0;max-width:52ch;}
+.lead b{color:var(--bone);font-weight:500;}
+.btn-start{display:inline-flex;align-items:center;gap:10px;margin-top:32px;background:var(--lime);color:var(--ink);
+  font-family:var(--m);font-weight:700;font-size:13px;letter-spacing:.04em;padding:17px 28px;
+  border:none;border-radius:2px;cursor:pointer;transition:transform .15s,background .15s;
+  animation:glow 2.2s ease-in-out infinite;}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(214,238,92,.5);}60%{box-shadow:0 0 0 14px rgba(214,238,92,0);}}
+.btn-start:hover{transform:translateY(-2px);background:var(--lime2);}
+.trust{margin-top:14px;font-family:var(--m);font-size:11px;color:var(--mist);letter-spacing:.03em;}
+
+/* questions */
+.qnum{font-family:var(--m);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mist);}
+.qtext{font-weight:700;font-size:clamp(21px,3.6vw,34px);letter-spacing:-.03em;line-height:1.12;margin:12px 0 0;max-width:24ch;}
+.qnote{font-family:var(--m);font-size:11px;color:var(--mist);letter-spacing:.02em;margin:8px 0 0;line-height:1.5;}
+.opts{margin:24px 0 0;display:flex;flex-direction:column;gap:10px;}
+.opt{display:flex;align-items:flex-start;gap:14px;width:100%;text-align:left;
+  background:var(--slate);border:1px solid var(--carbon);color:var(--bone);
+  font-family:var(--d);font-size:15.5px;line-height:1.45;padding:16px 18px;
+  border-radius:3px;cursor:pointer;transition:border-color .12s,background .12s;}
+.opt:hover{border-color:var(--steel);background:var(--ink2);}
+.opt.sel{border-color:var(--lime);background:rgba(214,238,92,.05);}
+.mk{flex:0 0 auto;width:19px;height:19px;border:1px solid var(--steel);border-radius:50%;margin-top:2px;
+  transition:all .12s;position:relative;}
+.opt.sel .mk{border-color:var(--lime);background:var(--lime);}
+.opt.sel .mk::after{content:'';position:absolute;inset:5px;background:var(--ink);border-radius:50%;}
+.qfoot{margin:22px 0 0;display:flex;align-items:center;justify-content:space-between;}
+.btn-back{background:transparent;border:1px solid var(--carbon);color:var(--mute);
+  font-family:var(--m);font-size:12px;letter-spacing:.04em;padding:10px 18px;
+  border-radius:2px;cursor:pointer;transition:border-color .12s,color .12s;}
+.btn-back:hover{border-color:var(--steel);color:var(--bone);}
+.hint{font-family:var(--m);font-size:11px;color:var(--mist);}
+
+/* calculating */
+.calc-h{font-weight:700;font-size:clamp(24px,4vw,42px);letter-spacing:-.035em;margin:16px 0 0;}
+.scan-box{margin:28px 0 0;border:1px solid var(--carbon);background:linear-gradient(180deg,var(--ink2),var(--ink));
+  position:relative;overflow:hidden;padding:40px 26px;}
+.beam{position:absolute;left:0;right:0;top:0;height:56px;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(214,238,92,.08) 60%,rgba(214,238,92,.28) 90%,transparent);
+  border-bottom:1px solid rgba(214,238,92,.55);animation:sweep 1.6s ease-in-out infinite;}
+@keyframes sweep{0%{opacity:0;transform:translateY(-20px);}15%{opacity:1;}80%{opacity:1;}100%{opacity:0;transform:translateY(220px);}}
+.slines{font-family:var(--m);font-size:12px;color:var(--mute);letter-spacing:.02em;line-height:2.2;}
+.slines .ok{color:var(--lime);}
+
+/* result */
+.res-hook{color:var(--mute);font-family:var(--m);font-size:12.5px;letter-spacing:.02em;line-height:1.6;max-width:46ch;}
+.res-hook b{color:var(--bone);}
+.total-wrap{margin:22px 0 0;}
+.total-lbl{font-family:var(--m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);}
+.total-num{font-family:var(--m);font-weight:700;font-size:clamp(48px,11vw,96px);
+  letter-spacing:-.04em;line-height:.9;color:var(--lime);font-variant-numeric:tabular-nums;
+  margin:8px 0 0;text-shadow:0 0 50px rgba(214,238,92,.22);}
+.total-yr{font-size:.25em;color:var(--mute);letter-spacing:0;text-shadow:none;margin-left:.25em;}
+.total-bench{font-family:var(--m);font-size:11px;color:var(--mist);margin:12px 0 0;line-height:1.65;}
+.total-bench b{color:var(--mute);}
+
+.p4{margin:22px 0 0;display:flex;flex-direction:column;gap:8px;}
+.prow{border:1px solid var(--carbon);background:var(--ink2);padding:14px 18px;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;border-radius:2px;}
+.prow.worst{border-color:rgba(214,238,92,.28);background:rgba(214,238,92,.04);}
+.prow-l{}
+.prow-tag{font-family:var(--m);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--mist);}
+.prow.worst .prow-tag{color:var(--lime2);}
+.prow-name{font-weight:600;font-size:15px;margin:3px 0 0;letter-spacing:-.01em;}
+.prow-sub{font-family:var(--m);font-size:10px;color:var(--mist);margin:4px 0 0;line-height:1.45;}
+.prow-amt{font-family:var(--m);font-weight:700;font-size:14.5px;color:var(--lime);white-space:nowrap;margin-top:3px;}
+.prow.dim .prow-amt{color:var(--mute);}
+
+/* email block */
+.email-block{margin:26px 0 0;border:1px solid var(--carbon);background:var(--ink2);padding:22px;}
+.email-h{font-weight:700;font-size:16px;letter-spacing:-.01em;}
+.email-sub{color:var(--mute);font-size:13px;line-height:1.55;margin:6px 0 0;}
+.email-row{display:flex;gap:10px;margin:16px 0 0;flex-wrap:wrap;}
+.email-in{flex:1;min-width:190px;background:var(--slate);border:1px solid var(--carbon);color:var(--bone);
+  font-family:var(--d);font-size:15px;padding:13px 14px;border-radius:2px;outline:none;transition:border-color .12s;}
+.email-in:focus{border-color:var(--lime);}
+.email-in::placeholder{color:var(--mist);}
+.btn-email{background:var(--lime);color:var(--ink);font-family:var(--m);font-weight:700;
+  font-size:12px;letter-spacing:.04em;padding:13px 20px;border:none;border-radius:2px;
+  cursor:pointer;white-space:nowrap;transition:background .12s;}
+.btn-email:disabled{opacity:.35;cursor:not-allowed;}
+.btn-email:not(:disabled):hover{background:var(--lime2);}
+.email-skip{font-family:var(--m);font-size:11px;color:var(--mist);background:none;border:none;
+  cursor:pointer;letter-spacing:.04em;margin-top:10px;display:inline-block;transition:color .12s;}
+.email-skip:hover{color:var(--mute);}
+.email-sent{font-family:var(--m);font-size:12px;color:var(--lime);letter-spacing:.04em;margin-top:12px;display:none;}
+
+/* cta block */
+.cta-block{margin:26px 0 0;padding:26px 0 0;border-top:1px solid var(--carbon);display:none;}
+.cta-eyebrow{font-family:var(--m);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime2);}
+.cta-h{font-weight:700;font-size:clamp(20px,3vw,26px);letter-spacing:-.025em;margin:8px 0 0;}
+.cta-body{color:var(--mute);font-size:14px;line-height:1.6;margin:10px 0 0;max-width:50ch;}
+.btn-cta{display:inline-flex;align-items:center;gap:10px;margin-top:20px;
+  background:var(--lime);color:var(--ink);font-family:var(--m);font-weight:700;
+  font-size:13px;letter-spacing:.04em;padding:17px 28px;border:none;border-radius:2px;
+  cursor:pointer;text-decoration:none;transition:transform .15s,background .15s;
+  animation:glow 2.2s ease-in-out infinite;}
+.btn-cta:hover{transform:translateY(-2px);background:var(--lime2);}
+.dq-note{font-family:var(--m);font-size:11px;color:var(--mist);margin:18px 0 0;
+  line-height:1.65;border-left:2px solid var(--carbon);padding-left:14px;display:none;}
+
+footer{padding:28px 0;border-top:1px solid var(--carbon);font-family:var(--m);font-size:11px;
+  color:var(--mist);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;letter-spacing:.04em;}
+
+@media(max-width:520px){
+  .email-row{flex-direction:column;}
+  .btn-email{width:100%;text-align:center;}
+  h1{font-size:30px;}
+  .total-num{font-size:48px;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <div class="logo"><span class="sq"></span>SOAP</div>
+    <div class="nav-tag" id="navTag">PROFIT LEAK FINDER</div>
+  </nav>
+  <div class="prog" id="prog"><div class="fill" id="progFill"></div></div>
+
+  <div class="stage">
+
+    <!-- LANDING -->
+    <section class="screen on" id="s-land">
+      <div class="eyebrow"><span class="dot"></span>8 questions &middot; 90 seconds &middot; your number, free</div>
+      <h1>How much profit is leaking from your<span class="hi"> business?</span></h1>
+      <p class="lead">Every answer is a tap. No typing until the end. You get a breakdown by Pipeline, Profit, People and Processes, calibrated to your industry. <b>Numbers are industry averages. The audit makes it real with your actual data.</b></p>
+      <button class="btn-start" onclick="start()">Find my number <span>&rarr;</span></button>
+      <div class="trust">No email required to see your number.</div>
+    </section>
+
+    <!-- QUESTION -->
+    <section class="screen" id="s-q">
+      <div class="qnum" id="qNum">Question 1 of 8</div>
+      <div class="qtext" id="qText"></div>
+      <div class="qnote" id="qNote"></div>
+      <div class="opts" id="qOpts"></div>
+      <div class="qfoot">
+        <button class="btn-back" id="backBtn" onclick="back()">&larr; Back</button>
+        <span class="hint">Closest answer</span>
+      </div>
+    </section>
+
+    <!-- CALCULATING -->
+    <section class="screen" id="s-calc">
+      <div class="eyebrow"><span class="dot"></span>Reading your answers</div>
+      <div class="calc-h">Calculating your<span style="color:var(--lime)"> leak.</span></div>
+      <div class="scan-box">
+        <div class="beam"></div>
+        <div class="slines">
+          <div id="sl1">&gt; Mapping to industry benchmarks...</div>
+          <div id="sl2" style="opacity:.22">&gt; Applying 4P coefficients...</div>
+          <div id="sl3" style="opacity:.22">&gt; Ranking leak by P...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULT -->
+    <section class="screen" id="s-result">
+      <p class="res-hook" id="resHook"></p>
+
+      <div class="total-wrap">
+        <div class="total-lbl">Estimated annual profit leak</div>
+        <div class="total-num"><span id="totalNum">£0</span><span class="total-yr">/yr</span></div>
+        <div class="total-bench" id="totalBench"></div>
+      </div>
+
+      <div class="p4" id="p4Rows"></div>
+
+      <div class="email-block" id="emailBlock">
+        <div class="email-h">Get the full breakdown by email.</div>
+        <div class="email-sub">Which P is costing you most, what the industry pattern is, and the one system to plug it first. Short. No fluff.</div>
+        <div class="email-row" id="emailRow">
+          <input class="email-in" type="email" id="emailIn" placeholder="you@yourbusiness.com" autocomplete="email" oninput="checkEmail()">
+          <button class="btn-email" id="emailBtn" onclick="submitEmail()" disabled>Send it &rarr;</button>
+        </div>
+        <button class="email-skip" onclick="skipEmail()">Skip &mdash; just show me the next step</button>
+        <div class="email-sent" id="emailSent">&#10003; Report on its way. Keep this page open.</div>
+      </div>
+
+      <div class="cta-block" id="ctaBlock">
+        <div class="cta-eyebrow">15-minute call &middot; free</div>
+        <h3 class="cta-h">That number is an estimate. Let's find out what it actually is.</h3>
+        <p class="cta-body">We sit with you, go through the four Ps against your real data, and show you exactly where it's going. If we can help you get it back, we'll walk you through what that looks like.</p>
+        <a class="btn-cta" id="bookBtn" href="https://cal.com/soap/triage" target="_blank" rel="noopener">Book the 15 minutes <span>&rarr;</span></a>
+        <p class="dq-note" id="dqNote"></p>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <span>SOAP &middot; Plug the leaks</span>
+    <span id="footNote">More cash &middot; More clarity &middot; More control</span>
+  </footer>
+</div>
+
+<script>
+/* =====================================================================
+   CONFIG
+   ===================================================================== */
+const BOOKING_URL    = 'https://cal.com/soap/triage'; // swap before going live
+const EMAIL_ENDPOINT = '';                            // POST endpoint; leave blank = no network call yet
+const WEBINAR_MODE   = true;                          // true = hides email capture, shows simple end card. Set false for live site.
+
+/* =====================================================================
+   INDUSTRY BENCHMARKS
+   Source: published industry research (McKinsey, REC, LaingBuisson,
+   Deltek, CITB, APSCo, Agency Management Institute, FMB).
+   Conservative [lo] / realistic [hi] as % of annual revenue per P.
+   These are starting estimates — replace with real audit data as it builds.
+   ===================================================================== */
+const IND = {
+  trades:{
+    label:'Trades & construction',
+    bench:'construction and trades businesses',
+    src:'FMB, CITB, McKinsey Construction Productivity',
+    P:{
+      // FMB: avg quote follow-up time 4.2 days; speed-to-lead studies show 60% loss after 24h
+      PIPELINE:[.055,.115],
+      // McKinsey: material waste + unclaimed variation orders = 5–11% of project revenue in SME contractors
+      PROFIT:  [.016,.034],
+      // CITB 2023: 72% of SME tradespeople say the owner is essential for quoting or site sign-off
+      PEOPLE:  [.013,.028],
+      // McKinsey Construction: paper-based job costing firms carry ~11% higher cost vs systemised peers
+      PROCESS: [.011,.024],
+    }
+  },
+  recruitment:{
+    label:'Recruitment',
+    bench:'UK recruitment agencies',
+    src:'APSCo, REC, LinkedIn Talent Solutions',
+    P:{
+      // LinkedIn Talent: submit-within-1h = 60% higher placement rate vs same-day; lost margin on missed slots
+      PIPELINE:[.045,.100],
+      // APSCo: rebate exposure + wrong client mix = avg 3–8% margin below optimal for sub-£10M agencies
+      PROFIT:  [.020,.044],
+      // REC: one senior billing consultant exit = 15–25% of desk revenue at risk for 6+ months
+      PEOPLE:  [.018,.038],
+      // REC Operations: duplicate sourcing effort averages 18% of recruiter time in agencies without CRM discipline
+      PROCESS: [.008,.018],
+    }
+  },
+  health:{
+    label:'Health & clinics',
+    bench:'health and clinic businesses',
+    src:'LaingBuisson, Solutionreach, NHS Benchmarking',
+    P:{
+      // Solutionreach: avg new-patient enquiry response 26h vs best-practice 1h; 35% drop-off after 4h
+      PIPELINE:[.035,.085],
+      // LaingBuisson: avg practitioner utilisation 68% vs 82% optimal; unbilled time + package underpricing
+      PROFIT:  [.017,.036],
+      // LaingBuisson: owner-practitioner bottleneck most prevalent in sub-10-staff clinics; 8–14% capacity ceiling
+      PEOPLE:  [.021,.044],
+      // NHS Benchmarking / private sector: no-show rate 8–12%; manual rebooking = avg 40min staff time per no-show
+      PROCESS: [.013,.028],
+    }
+  },
+  agency:{
+    label:'Agency / services',
+    bench:'service and creative agencies',
+    src:'Deltek, 2Bobs, Agency Management Institute',
+    P:{
+      // Deltek: under-scoped projects average 22% over internal budget; scope creep starts at proposal stage
+      PIPELINE:[.040,.090],
+      // 2Bobs Benchmark: wrong-client-mix + write-offs = avg 12–18% of revenue foregone in sub-£10M agencies
+      PROFIT:  [.022,.046],
+      // 2Bobs: senior AM dependency; one exit takes 6–9 months to revenue-recover
+      PEOPLE:  [.015,.032],
+      // Agency Management Institute: billable-time leakage avg 14% from poor time tracking in agencies <50 staff
+      PROCESS: [.009,.020],
+    }
+  },
+  other:{
+    label:'Other',
+    bench:'established businesses in your sector',
+    src:'ONS productivity studies, Xero SME benchmarks',
+    P:{
+      PIPELINE:[.040,.090],
+      PROFIT:  [.015,.032],
+      PEOPLE:  [.011,.024],
+      PROCESS: [.016,.034],
+    }
+  },
+};
+
+/* revenue band midpoints (£) */
+const REV = {
+  'u1m':  {mid:700000,   label:'Under £1M',   dq:true},
+  '1m-2m':{mid:1500000,  label:'£1M – £2M',   dq:true},
+  '2m-5m':{mid:3500000,  label:'£2M – £5M',   dq:false},
+  '5m-10m':{mid:7500000, label:'£5M – £10M',  dq:false},
+  '10m+': {mid:12000000, label:'£10M+',        dq:false},
+};
+
+/* P display metadata */
+const PM = {
+  PIPELINE:{name:'Pipeline',  sub:'Leads going cold, slow follow-up, quotes going quiet'},
+  PROFIT:  {name:'Profit',    sub:'Margin erosion, wrong client mix, invisible pricing gaps'},
+  PEOPLE:  {name:'People',    sub:'Founder bottleneck, key-person risk, team ceiling'},
+  PROCESS: {name:'Processes', sub:'Manual ops, spreadsheets, knowledge stuck in heads'},
+};
+
+/* =====================================================================
+   QUESTIONS
+   ===================================================================== */
+const QS = [
+  {id:'industry', text:'What industry are you in?',
+   note:'Sets your benchmark numbers.',
+   opts:[
+     {t:'Trades & construction',       v:'trades'},
+     {t:'Recruitment',                 v:'recruitment'},
+     {t:'Health & clinics',            v:'health'},
+     {t:'Agency / services',           v:'agency'},
+     {t:'Logistics, retail or other',  v:'other'},
+   ]},
+  {id:'revenue', text:'Annual revenue, roughly?',
+   note:'Sets the base for all the maths.',
+   opts:[
+     {t:'Under £1M',   v:'u1m'},
+     {t:'£1M – £2M',  v:'1m-2m'},
+     {t:'£2M – £5M',  v:'2m-5m'},
+     {t:'£5M – £10M', v:'5m-10m'},
+     {t:'£10M+',      v:'10m+'},
+   ]},
+  {id:'age', text:'How long have you been trading?',
+   note:'Older businesses carry more legacy drag.',
+   opts:[
+     {t:'Under 5 years', v:'u5',   legacy:.70},
+     {t:'5 – 10 years',  v:'5-10', legacy:1.00},
+     {t:'10 – 20 years', v:'10-20',legacy:1.20},
+     {t:'20+ years',     v:'20+',  legacy:1.35},
+   ]},
+  {id:'pipeline', text:'What happens when a new lead comes in?',
+   note:'Speed-to-lead is the single biggest Pipeline leak.',
+   p:'PIPELINE',
+   opts:[
+     {t:'Contacted within the hour',    v:'hour',    mod:.28},
+     {t:'Same day, usually',            v:'sameday', mod:.65},
+     {t:'When someone gets to it',      v:'whenever',mod:1.00},
+     {t:"Honestly… I don't know",       v:'dunno',   mod:1.32},
+   ]},
+  {id:'profit', text:'Do you know your margin on every job or client?',
+   note:'Margin visibility determines how much quietly disappears.',
+   p:'PROFIT',
+   opts:[
+     {t:'To the pound',                      v:'exact',      mod:.20},
+     {t:'Roughly',                           v:'roughly',    mod:.58},
+     {t:'By gut feel',                       v:'gut',        mod:1.00},
+     {t:'Only when the accountant tells me', v:'accountant', mod:1.32},
+   ]},
+  {id:'people', text:'How many hours a week are you personally in the weeds?',
+   note:'Your hours are the most expensive in the business.',
+   p:'PEOPLE',
+   opts:[
+     {t:'Under 10',                   v:'u10',   mod:.20},
+     {t:'10 – 25',                    v:'10-25', mod:.58},
+     {t:'25 – 40',                    v:'25-40', mod:1.00},
+     {t:"It's basically all of them", v:'all',   mod:1.32},
+   ]},
+  {id:'process', text:'Where does the business actually live?',
+   note:'Process maturity is the hidden multiplier on everything else.',
+   p:'PROCESS',
+   opts:[
+     {t:'Documented systems',      v:'documented',  mod:.16},
+     {t:'Spreadsheets everywhere', v:'spreadsheets',mod:.62},
+     {t:"A few people's heads",    v:'heads',       mod:1.00},
+     {t:'Mine, mostly',            v:'mine',        mod:1.28},
+   ]},
+  {id:'pain', text:"What's keeping you up at night?",
+   note:"Doesn't change the numbers. Personalises the first line of your result.",
+   opts:[
+     {t:'Cash feels inconsistent',          v:'cash', hook:"Cash is inconsistent. Here's where it's leaking:"},
+     {t:"I can't step away from it",        v:'step', hook:"You can't step away. Here's what that dependency is costing:"},
+     {t:'The team is maxed out',            v:'team', hook:"The team is maxed out. Here's what's being left on the table:"},
+     {t:"Working more, keeping less",       v:'less', hook:"Working more, keeping less. Here's where the margin goes:"},
+   ]},
+];
+
+/* =====================================================================
+   STATE
+   ===================================================================== */
+let qi = 0;
+const ans = {};
+
+/* =====================================================================
+   NAV HELPERS
+   ===================================================================== */
+function show(id, tag){
+  document.querySelectorAll('.screen').forEach(s=>{
+    s.classList.remove('on','fade');
+  });
+  const el = document.getElementById(id);
+  el.classList.add('on');
+  requestAnimationFrame(()=>el.classList.add('fade'));
+  if(tag) document.getElementById('navTag').textContent = tag;
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+function setProgress(step, total){
+  document.getElementById('prog').classList.add('on');
+  document.getElementById('progFill').style.width = Math.round((step/total)*100)+'%';
+}
+
+/* =====================================================================
+   QUESTION FLOW
+   ===================================================================== */
+function start(){
+  qi = 0;
+  renderQ();
+  show('s-q','QUESTION 1 OF 8');
+}
+
+function renderQ(){
+  const q = QS[qi];
+  document.getElementById('qNum').textContent = `Question ${qi+1} of ${QS.length}`;
+  document.getElementById('qText').textContent = q.text;
+  document.getElementById('qNote').textContent = q.note || '';
+
+  const wrap = document.getElementById('qOpts');
+  wrap.innerHTML = '';
+  q.opts.forEach(o=>{
+    const btn = document.createElement('button');
+    btn.className = 'opt' + (ans[q.id] === o.v ? ' sel' : '');
+    btn.dataset.v = o.v;
+    btn.innerHTML = `<span class="mk"></span><span>${o.t}</span>`;
+    btn.onclick = ()=> pick(o.v);
+    wrap.appendChild(btn);
+  });
+
+  document.getElementById('backBtn').style.visibility = qi === 0 ? 'hidden' : 'visible';
+  setProgress(qi, QS.length);
+  document.getElementById('navTag').textContent = `QUESTION ${qi+1} OF ${QS.length}`;
+}
+
+function pick(val){
+  const q = QS[qi];
+  ans[q.id] = val;
+  document.querySelectorAll('#qOpts .opt').forEach(b=>{
+    b.classList.toggle('sel', b.dataset.v === val);
+  });
+  setTimeout(()=>{
+    if(qi < QS.length - 1){
+      qi++;
+      renderQ();
+      show('s-q',`QUESTION ${qi+1} OF ${QS.length}`);
+    } else {
+      goCalc();
+    }
+  }, 240);
+}
+
+function back(){
+  if(qi > 0){ qi--; renderQ(); show('s-q',`QUESTION ${qi+1} OF ${QS.length}`); }
+}
+
+/* =====================================================================
+   CALCULATING SCREEN
+   ===================================================================== */
+function goCalc(){
+  show('s-calc','CALCULATING');
+  setProgress(QS.length, QS.length);
+  // reset scan lines
+  const sl2=document.getElementById('sl2'), sl3=document.getElementById('sl3');
+  sl2.style.opacity='.22'; sl2.innerHTML='&gt; Applying 4P coefficients...';
+  sl3.style.opacity='.22'; sl3.innerHTML='&gt; Ranking leak by P...';
+  setTimeout(()=>{ sl2.style.opacity=1; sl2.innerHTML='&gt; Applying 4P coefficients... <span class="ok">done</span>'; },800);
+  setTimeout(()=>{ sl3.style.opacity=1; sl3.innerHTML='&gt; Ranking leak by P... <span class="ok">done</span>'; },1600);
+  setTimeout(renderResult, 2700);
+}
+
+/* =====================================================================
+   SCORING
+   ===================================================================== */
+function score(){
+  const ind     = IND[ans.industry] || IND.other;
+  const revData = REV[ans.revenue]  || REV['2m-5m'];
+  const rev     = revData.mid;
+  const dq      = revData.dq;
+
+  const ageOpt  = QS[2].opts.find(o=>o.v===ans.age);
+  const legacy  = ageOpt ? ageOpt.legacy : 1.0;
+
+  // Q id -> P key mapping
+  const pqMap = {PIPELINE:'pipeline', PROFIT:'profit', PEOPLE:'people', PROCESS:'process'};
+
+  const result = {};
+  for(const p of ['PIPELINE','PROFIT','PEOPLE','PROCESS']){
+    const qId  = pqMap[p];
+    const q    = QS.find(q=>q.id===qId);
+    const opt  = q ? q.opts.find(o=>o.v===ans[qId]) : null;
+    const mod  = opt ? opt.mod : 1.0;
+    const base = ind.P[p];
+    result[p] = {
+      lo: Math.round(rev * base[0] * mod * legacy / 1000) * 1000,
+      hi: Math.round(rev * base[1] * mod * legacy / 1000) * 1000,
+    };
+  }
+
+  const sorted = ['PIPELINE','PROFIT','PEOPLE','PROCESS']
+    .sort((a,b)=> result[b].hi - result[a].hi);
+
+  const totalLo = sorted.reduce((s,p)=>s+result[p].lo, 0);
+  const totalHi = sorted.reduce((s,p)=>s+result[p].hi, 0);
+
+  const painOpt = QS[7].opts.find(o=>o.v===ans.pain);
+  const hook    = painOpt ? painOpt.hook : "Here's what your business is leaking:";
+
+  return {result, sorted, totalLo, totalHi, hook, dq, ind, revData};
+}
+
+/* =====================================================================
+   RESULT RENDER
+   ===================================================================== */
+function renderResult(){
+  const {result, sorted, totalLo, totalHi, hook, dq, ind, revData} = score();
+
+  document.getElementById('resHook').innerHTML = hook;
+
+  document.getElementById('totalBench').innerHTML =
+    `Based on industry averages for <b>${revData.label}</b> ${ind.bench}. `+
+    `The audit replaces this with your real numbers.`;
+
+  // P rows
+  const p4 = document.getElementById('p4Rows');
+  p4.innerHTML = '';
+  sorted.forEach((p,i)=>{
+    const m = PM[p];
+    const r = result[p];
+    const worst = i===0;
+    const dim   = r.hi < 8000;
+    const div   = document.createElement('div');
+    div.className = 'prow'+(worst?' worst':dim?' dim':'');
+    div.innerHTML =
+      `<div class="prow-l">
+        <div class="prow-tag">${worst?'&uarr; biggest leak':'#'+(i+1)} &middot; ${m.name.toUpperCase()}</div>
+        <div class="prow-name">${m.name}</div>
+        <div class="prow-sub">${m.sub}</div>
+       </div>
+       <div class="prow-amt">${fmtK(r.lo)}&ndash;${fmtK(r.hi)}</div>`;
+    p4.appendChild(div);
+  });
+
+  // count up to midpoint, then snap to range
+  const el = document.getElementById('totalNum');
+  countUp(el, totalLo, totalHi, 1300);
+
+  // book link
+  document.getElementById('bookBtn').href = BOOKING_URL;
+
+  // DQ note
+  if(dq){
+    const n = document.getElementById('dqNote');
+    n.style.display = 'block';
+    n.textContent = "One note: SOAP's work is calibrated for £2M+ businesses. Your number is still real — the leaks are there. When you're ready to scale past £2M, we'll be here.";
+  }
+
+  // webinar mode: skip email capture, auto-reveal CTA with simpler end card
+  if(WEBINAR_MODE){
+    document.getElementById('emailBlock').style.display = 'none';
+    const cta = document.getElementById('ctaBlock');
+    cta.style.display = 'block';
+    cta.querySelector('.cta-eyebrow').textContent = 'Want to verify this with your real numbers?';
+    cta.querySelector('.cta-h').textContent = "That's an industry estimate. The actual number is usually higher.";
+    cta.querySelector('.cta-body').textContent = "We sit down with you, go through the four Ps against your real data, and show you exactly where it's going. Talk to Ryan after this session.";
+    cta.querySelector('.btn-cta').style.display = 'none';
+  }
+
+  document.getElementById('footNote').innerHTML = `${ind.label} &middot; ${revData.label}`;
+  show('s-result','YOUR LEAK');
+  setProgress(QS.length, QS.length);
+}
+
+/* =====================================================================
+   FORMATTING
+   ===================================================================== */
+function fmtK(n){
+  if(n >= 1000000) return '£'+(n/1000000).toFixed(1).replace('.0','')+'M';
+  if(n >= 1000)    return '£'+Math.round(n/1000)+'k';
+  return '£'+n.toLocaleString('en-GB');
+}
+function fmt(n){ return '£'+Math.round(n).toLocaleString('en-GB'); }
+
+function countUp(el, lo, hi, dur){
+  const mid   = Math.round((lo+hi)/2);
+  const start = performance.now();
+  (function tick(now){
+    const p = Math.min(1,(now-start)/dur);
+    const e = 1-Math.pow(1-p,3);
+    el.textContent = fmt(Math.round(mid*e/1000)*1000);
+    if(p<1) requestAnimationFrame(tick);
+    else el.innerHTML = `${fmtK(lo)}&ndash;${fmtK(hi)}`;
+  })(performance.now());
+}
+
+/* =====================================================================
+   EMAIL CAPTURE
+   ===================================================================== */
+function checkEmail(){
+  const ok = /\S+@\S+\.\S+/.test(document.getElementById('emailIn').value.trim());
+  document.getElementById('emailBtn').disabled = !ok;
+}
+
+async function submitEmail(){
+  const email = document.getElementById('emailIn').value.trim();
+  if(!/\S+@\S+\.\S+/.test(email)) return;
+
+  if(EMAIL_ENDPOINT){
+    try{
+      const {result, sorted, totalLo, totalHi, dq, ind, revData} = score();
+      await fetch(EMAIL_ENDPOINT,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          email, industry:ans.industry, revenue:ans.revenue,
+          answers:{...ans}, totalLo, totalHi,
+          worstP:sorted[0], disqualified:dq,
+          industryLabel:ind.label, revenueLabel:revData.label,
+        })
+      });
+    }catch(e){ /* silent — never block UX on network */ }
+  }
+
+  document.getElementById('emailRow').style.display    = 'none';
+  document.getElementById('emailBlock').querySelector('.email-skip').style.display = 'none';
+  document.getElementById('emailSent').style.display   = 'block';
+  showCTA();
+}
+
+function skipEmail(){
+  document.getElementById('emailBlock').style.display = 'none';
+  showCTA();
+}
+
+function showCTA(){
+  const cta = document.getElementById('ctaBlock');
+  cta.style.display = 'block';
+  setTimeout(()=>cta.scrollIntoView({behavior:'smooth',block:'nearest'}), 100);
+}
+</script>
+</body>
+</html>
