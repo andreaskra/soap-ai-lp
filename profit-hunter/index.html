@@ -252,6 +252,20 @@ const EMAIL_ENDPOINT = 'https://fhvuacfchffrjyclbdos.supabase.co/functions/v1/ca
 const WEBINAR_MODE   = false;
 
 /* =====================================================================
+   CURRENCY DETECTION — timezone-based, no API call
+   ===================================================================== */
+const CUR = (function(){
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  if(tz==='Europe/London'||tz==='Europe/Isle_of_Man'||tz==='Europe/Jersey'||tz==='Europe/Guernsey')
+    return {code:'GBP',symbol:'£',locale:'en-GB'};
+  if(tz.startsWith('Australia/')||tz==='Antarctica/Macquarie')
+    return {code:'AUD',symbol:'A$',locale:'en-AU'};
+  if(tz.startsWith('Europe/'))
+    return {code:'EUR',symbol:'€',locale:'en-IE'};
+  return {code:'USD',symbol:'$',locale:'en-US'};
+})();
+
+/* =====================================================================
    INDUSTRY BENCHMARKS
    Source: published industry research (McKinsey, REC, LaingBuisson,
    Deltek, CITB, APSCo, Agency Management Institute, FMB).
@@ -332,13 +346,13 @@ const IND = {
   },
 };
 
-/* revenue band midpoints (£) */
+/* revenue band midpoints */
 const REV = {
-  'u1m':  {mid:700000,   label:'Under £1M',   dq:true},
-  '1m-2m':{mid:1500000,  label:'£1M – £2M',   dq:true},
-  '2m-5m':{mid:3500000,  label:'£2M – £5M',   dq:false},
-  '5m-10m':{mid:7500000, label:'£5M – £10M',  dq:false},
-  '10m+': {mid:12000000, label:'£10M+',        dq:false},
+  'u1m':  {mid:700000,   label:`Under ${CUR.symbol}1M`,                          dq:true},
+  '1m-2m':{mid:1500000,  label:`${CUR.symbol}1M – ${CUR.symbol}2M`,         dq:true},
+  '2m-5m':{mid:3500000,  label:`${CUR.symbol}2M – ${CUR.symbol}5M`,         dq:false},
+  '5m-10m':{mid:7500000, label:`${CUR.symbol}5M – ${CUR.symbol}10M`,        dq:false},
+  '10m+': {mid:12000000, label:`${CUR.symbol}10M+`,                              dq:false},
 };
 
 /* P display metadata */
@@ -365,11 +379,11 @@ const QS = [
   {id:'revenue', text:'Annual revenue, roughly?',
    note:'Sets the base for all the maths.',
    opts:[
-     {t:'Under £1M',   v:'u1m'},
-     {t:'£1M – £2M',  v:'1m-2m'},
-     {t:'£2M – £5M',  v:'2m-5m'},
-     {t:'£5M – £10M', v:'5m-10m'},
-     {t:'£10M+',      v:'10m+'},
+     {t:`Under ${CUR.symbol}1M`,                        v:'u1m'},
+     {t:`${CUR.symbol}1M – ${CUR.symbol}2M`,      v:'1m-2m'},
+     {t:`${CUR.symbol}2M – ${CUR.symbol}5M`,      v:'2m-5m'},
+     {t:`${CUR.symbol}5M – ${CUR.symbol}10M`,     v:'5m-10m'},
+     {t:`${CUR.symbol}10M+`,                           v:'10m+'},
    ]},
   {id:'age', text:'How long have you been trading?',
    note:'Older businesses carry more legacy drag.',
@@ -600,7 +614,7 @@ function renderResult(){
   if(dq){
     const n = document.getElementById('dqNote');
     n.style.display = 'block';
-    n.textContent = "One note: SOAP's work is calibrated for £2M+ businesses. Your number is still real — the leaks are there. When you're ready to scale past £2M, we'll be here.";
+    n.textContent = `One note: SOAP's work is calibrated for ${CUR.symbol}2M+ businesses. Your number is still real — the leaks are there. When you're ready to scale past ${CUR.symbol}2M, we'll be here.`;
   }
 
   // CTA always visible immediately
@@ -615,11 +629,11 @@ function renderResult(){
    FORMATTING
    ===================================================================== */
 function fmtK(n){
-  if(n >= 1000000) return '£'+(n/1000000).toFixed(1).replace('.0','')+'M';
-  if(n >= 1000)    return '£'+Math.round(n/1000)+'k';
-  return '£'+n.toLocaleString('en-GB');
+  if(n >= 1000000) return CUR.symbol+(n/1000000).toFixed(1).replace('.0','')+'M';
+  if(n >= 1000)    return CUR.symbol+Math.round(n/1000)+'k';
+  return CUR.symbol+n.toLocaleString(CUR.locale);
 }
-function fmt(n){ return '£'+Math.round(n).toLocaleString('en-GB'); }
+function fmt(n){ return CUR.symbol+Math.round(n).toLocaleString(CUR.locale); }
 
 function countUp(el, lo, hi, dur){
   const mid   = Math.round((lo+hi)/2);
