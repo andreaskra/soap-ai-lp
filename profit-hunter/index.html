@@ -131,6 +131,9 @@ h1 .hi{color:var(--lime);}
 .founders-names{font-family:var(--m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime2);}
 .founders-h{font-weight:700;font-size:clamp(20px,3.2vw,26px);letter-spacing:-.03em;margin:10px 0 0;line-height:1.18;}
 .founders-p{color:var(--mute);font-size:14px;line-height:1.7;margin:14px 0 0;max-width:52ch;}
+.founders-topline{padding:26px 28px 22px;font-weight:700;font-size:clamp(19px,3vw,24px);letter-spacing:-.03em;line-height:1.22;}
+.cal-embed{margin:20px 0 0;border-radius:3px;overflow:hidden;border:1px solid var(--carbon);}
+.cal-embed iframe{display:block;width:100%;height:660px;border:none;}
 .btn-cta{display:inline-flex;align-items:center;gap:10px;margin-top:22px;
   background:var(--lime);color:var(--ink);font-family:var(--m);font-weight:700;
   font-size:13px;letter-spacing:.04em;padding:17px 28px;border:none;border-radius:2px;
@@ -241,14 +244,18 @@ footer{padding:28px 0;border-top:1px solid var(--carbon);font-family:var(--m);fo
       <div class="p4" id="p4Rows"></div>
 
       <div class="founders-cta" id="ctaBlock">
+        <div class="founders-topline">We can help you get that back by installing 5 AI Systems.</div>
         <div class="founders-img">
           <img src="assets/founder-04.jpg" alt="Ryan and Ali, Co-Founders of SOAP" loading="lazy">
         </div>
         <div class="founders-body">
           <div class="founders-names">Ryan &amp; Ali &middot; Co-Founders of SOAP</div>
-          <h3 class="founders-h">Most businesses in this position recover within 90 days. 15 minutes to find out if yours can.</h3>
-          <p class="founders-p">That number is based on your industry. Your real figure — and whether we can recover it — comes from a quick call with Ryan. He'll confirm your actual leak, tell you which P to close first, and whether we can build the systems to close it. Usually within 90 days.</p>
-          <a class="btn-cta" id="bookBtn" href="https://app.communitee.ai/widget/booking/soap-demo" target="_blank" rel="noopener">Book 15 minutes with Ryan &rarr;</a>
+          <h3 class="founders-h">The question is whether all 5 would work for a business like yours.</h3>
+          <p class="founders-p">The 15 minutes isn't a pitch. Ryan will look at your numbers and how your business runs, then give you a straight answer: can we install these systems and recover this figure, or not. We won't waste your time if the fit isn't there.</p>
+          <a class="btn-cta" id="bookBtn" href="#" onclick="openCal();return false;">Book 15 minutes with Ryan &rarr;</a>
+          <div class="cal-embed" id="calWrap" style="display:none;">
+            <iframe src="https://app.communitee.ai/widget/booking/soap-demo" allowfullscreen title="Book a call with Ryan"></iframe>
+          </div>
           <p class="founders-trust">Free &middot; 15 minutes &middot; honest answer either way</p>
           <p class="dq-note" id="dqNote"></p>
         </div>
@@ -627,8 +634,7 @@ function renderResult(){
   const el = document.getElementById('totalNum');
   countUp(el, totalLo, totalHi, 1300);
 
-  // book link
-  document.getElementById('bookBtn').href = BOOKING_URL;
+  // book button (inline calendar)
 
   // DQ note
   if(dq){
@@ -695,6 +701,16 @@ function submitGate(){
     }).catch(()=>{});
   }
   renderResult();
+}
+
+function openCal(){
+  const btn = document.getElementById('bookBtn');
+  btn.textContent = 'Prefer to open in a new tab? Click here →';
+  btn.style.cssText += ';font-size:11px;padding:12px 20px;margin-top:14px;animation:none;opacity:.7;';
+  btn.onclick = function(e){ e.preventDefault(); window.open(BOOKING_URL,'_blank'); };
+  const wrap = document.getElementById('calWrap');
+  wrap.style.display = 'block';
+  wrap.scrollIntoView({behavior:'smooth', block:'start'});
 }
 </script>
 </body>
