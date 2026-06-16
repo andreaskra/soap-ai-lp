@@ -122,8 +122,11 @@ h1 .hi{color:var(--lime);}
 
 /* founders CTA block */
 .founders-cta{margin:28px 0 0;border:1px solid var(--steel);border-radius:3px;overflow:hidden;background:var(--ink2);}
-.founders-img img{width:100%;height:260px;object-fit:cover;object-position:center 28%;display:block;
-  filter:grayscale(18%) contrast(1.04);}
+.founders-img{position:relative;}
+.founders-img img{width:100%;height:260px;object-fit:cover;object-position:center 18%;display:block;
+  filter:grayscale(35%) contrast(1.12) brightness(0.88);}
+.founders-img::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(10,14,20,0) 45%,rgba(10,14,20,0.78) 100%);}
 .founders-body{padding:28px 28px 32px;}
 .founders-names{font-family:var(--m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime2);}
 .founders-h{font-weight:700;font-size:clamp(20px,3.2vw,26px);letter-spacing:-.03em;margin:10px 0 0;line-height:1.18;}
@@ -232,7 +235,6 @@ footer{padding:28px 0;border-top:1px solid var(--carbon);font-family:var(--m);fo
       <div class="total-wrap">
         <div class="total-lbl">Estimated annual profit leak</div>
         <div class="total-num"><span id="totalNum">£0</span><span class="total-yr">/yr</span></div>
-        <p class="gross-note">Gross profit basis &mdash; revenue and margin leaving before it hits your P&amp;L. Based on industry benchmarks; the audit uses your actual numbers.</p>
         <div class="total-bench" id="totalBench"></div>
       </div>
 
@@ -240,14 +242,14 @@ footer{padding:28px 0;border-top:1px solid var(--carbon);font-family:var(--m);fo
 
       <div class="founders-cta" id="ctaBlock">
         <div class="founders-img">
-          <img src="assets/founder-02.jpg" alt="Ryan and Ali, SOAP" loading="lazy">
+          <img src="assets/founder-04.jpg" alt="Ryan and Ali, Co-Founders of SOAP" loading="lazy">
         </div>
         <div class="founders-body">
-          <div class="founders-names">Ryan &amp; Ali &middot; SOAP</div>
-          <h3 class="founders-h">That's real money. Let's talk about putting it back.</h3>
-          <p class="founders-p">Between us we've built and run businesses — done the payroll, hired the wrong people, lost margin we didn't notice for months. We know what it looks like when money walks out the door and the books still look fine.<br><br>One call. We'll go through the four Ps with you, tell you which leak is bleeding worst, and whether we think we can help you close it. No slides. No pitch unless it actually makes sense.</p>
-          <a class="btn-cta" id="bookBtn" href="https://app.communitee.ai/widget/booking/soap-demo" target="_blank" rel="noopener">Book a call with Ryan &rarr;</a>
-          <p class="founders-trust">Free &middot; 30 minutes &middot; no pitch unless it makes sense</p>
+          <div class="founders-names">Ryan &amp; Ali &middot; Co-Founders of SOAP</div>
+          <h3 class="founders-h">That number is real. 15 minutes to find out if we can get it back.</h3>
+          <p class="founders-p">This is a triage call, not a pitch. We ask a few questions to see if this is something we've fixed before — and whether we're the right people to fix it for you. If there's a clear fit, we'll tell you exactly what the next step looks like and what it costs. If not, we'll tell you that too.</p>
+          <a class="btn-cta" id="bookBtn" href="https://app.communitee.ai/widget/booking/soap-demo" target="_blank" rel="noopener">Book 15 minutes with Ryan &rarr;</a>
+          <p class="founders-trust">Free &middot; 15 minutes &middot; honest answer either way</p>
           <p class="dq-note" id="dqNote"></p>
         </div>
       </div>
