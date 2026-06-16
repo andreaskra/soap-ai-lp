@@ -1,0 +1,12 @@
+name = "soap-capture"
+main = "capture.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+# GHL_API_KEY and GHL_LOCATION_ID are secrets — set via:
+# wrangler secret put GHL_API_KEY
+# wrangler secret put GHL_LOCATION_ID
+
+[[routes]]
+pattern = "soap-ai.com/api/capture"
+zone_name = "soap-ai.com"
