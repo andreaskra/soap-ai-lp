@@ -117,29 +117,10 @@ h1 .hi{color:var(--lime);}
 .prow-amt{font-family:var(--m);font-weight:700;font-size:14.5px;color:var(--lime);white-space:nowrap;margin-top:3px;}
 .prow.dim .prow-amt{color:var(--mute);}
 
-/* email block */
-.email-block{margin:26px 0 0;border:1px solid var(--carbon);background:var(--ink2);padding:22px;}
-.email-h{font-weight:700;font-size:16px;letter-spacing:-.01em;}
-.email-sub{color:var(--mute);font-size:13px;line-height:1.55;margin:6px 0 0;}
-.email-row{display:flex;gap:10px;margin:16px 0 0;flex-wrap:wrap;}
-.email-in{flex:1;min-width:190px;background:var(--slate);border:1px solid var(--carbon);color:var(--bone);
-  font-family:var(--d);font-size:15px;padding:13px 14px;border-radius:2px;outline:none;transition:border-color .12s;}
-.email-in:focus{border-color:var(--lime);}
-.email-in::placeholder{color:var(--mist);}
-.btn-email{background:var(--lime);color:var(--ink);font-family:var(--m);font-weight:700;
-  font-size:12px;letter-spacing:.04em;padding:13px 20px;border:none;border-radius:2px;
-  cursor:pointer;white-space:nowrap;transition:background .12s;}
-.btn-email:disabled{opacity:.35;cursor:not-allowed;}
-.btn-email:not(:disabled):hover{background:var(--lime2);}
-.email-skip{font-family:var(--m);font-size:11px;color:var(--mist);background:none;border:none;
-  cursor:pointer;letter-spacing:.04em;margin-top:10px;display:inline-block;transition:color .12s;}
-.email-skip:hover{color:var(--mute);}
-.email-sent{font-family:var(--m);font-size:12px;color:var(--lime);letter-spacing:.04em;margin-top:12px;display:none;}
-
-/* cta block */
-.cta-block{margin:26px 0 0;padding:26px 0 0;border-top:1px solid var(--carbon);display:none;}
+/* cta block — shown immediately after results */
+.cta-block{margin:28px 0 0;padding:28px;background:var(--ink2);border:1px solid var(--steel);}
 .cta-eyebrow{font-family:var(--m);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime2);}
-.cta-h{font-weight:700;font-size:clamp(20px,3vw,26px);letter-spacing:-.025em;margin:8px 0 0;}
+.cta-h{font-weight:700;font-size:clamp(19px,3vw,24px);letter-spacing:-.025em;margin:8px 0 0;line-height:1.2;}
 .cta-body{color:var(--mute);font-size:14px;line-height:1.6;margin:10px 0 0;max-width:50ch;}
 .btn-cta{display:inline-flex;align-items:center;gap:10px;margin-top:20px;
   background:var(--lime);color:var(--ink);font-family:var(--m);font-weight:700;
@@ -149,6 +130,22 @@ h1 .hi{color:var(--lime);}
 .btn-cta:hover{transform:translateY(-2px);background:var(--lime2);}
 .dq-note{font-family:var(--m);font-size:11px;color:var(--mist);margin:18px 0 0;
   line-height:1.65;border-left:2px solid var(--carbon);padding-left:14px;display:none;}
+
+/* email block — secondary, below cta */
+.email-block{margin:16px 0 0;padding:20px;border:1px solid var(--carbon);background:transparent;}
+.email-h{font-family:var(--m);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);}
+.email-sub{color:var(--mist);font-size:12px;line-height:1.5;margin:5px 0 0;}
+.email-row{display:flex;gap:10px;margin:14px 0 0;flex-wrap:wrap;}
+.email-in{flex:1;min-width:190px;background:var(--slate);border:1px solid var(--carbon);color:var(--bone);
+  font-family:var(--d);font-size:14px;padding:11px 14px;border-radius:2px;outline:none;transition:border-color .12s;}
+.email-in:focus{border-color:var(--lime);}
+.email-in::placeholder{color:var(--mist);}
+.btn-email{background:var(--steel);color:var(--bone);font-family:var(--m);font-weight:700;
+  font-size:11px;letter-spacing:.06em;padding:11px 18px;border:none;border-radius:2px;
+  cursor:pointer;white-space:nowrap;transition:background .12s;}
+.btn-email:disabled{opacity:.35;cursor:not-allowed;}
+.btn-email:not(:disabled):hover{background:var(--carbon);}
+.email-sent{font-family:var(--m);font-size:11px;color:var(--lime);letter-spacing:.04em;margin-top:10px;display:none;}
 
 footer{padding:28px 0;border-top:1px solid var(--carbon);font-family:var(--m);font-size:11px;
   color:var(--mist);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;letter-spacing:.04em;}
@@ -219,23 +216,22 @@ footer{padding:28px 0;border-top:1px solid var(--carbon);font-family:var(--m);fo
 
       <div class="p4" id="p4Rows"></div>
 
-      <div class="email-block" id="emailBlock">
-        <div class="email-h">Get the full breakdown by email.</div>
-        <div class="email-sub">Which P is costing you most, what the industry pattern is, and the one system to plug it first. Short. No fluff.</div>
-        <div class="email-row" id="emailRow">
-          <input class="email-in" type="email" id="emailIn" placeholder="you@yourbusiness.com" autocomplete="email" oninput="checkEmail()">
-          <button class="btn-email" id="emailBtn" onclick="submitEmail()" disabled>Send it &rarr;</button>
-        </div>
-        <button class="email-skip" onclick="skipEmail()">Skip &mdash; just show me the next step</button>
-        <div class="email-sent" id="emailSent">&#10003; Report on its way. Keep this page open.</div>
+      <div class="cta-block" id="ctaBlock">
+        <div class="cta-eyebrow">Free &middot; 15 minutes &middot; your real number</div>
+        <h3 class="cta-h">That's an industry estimate. Your actual number is usually higher.</h3>
+        <p class="cta-body">We go through the four Ps against your real data — revenue, margins, how you're spending your time — and show you exactly where it's going. No pitch. Just the number and what's causing it.</p>
+        <a class="btn-cta" id="bookBtn" href="https://app.communitee.ai/widget/booking/soap-demo" target="_blank" rel="noopener">Book 15 minutes &rarr;</a>
+        <p class="dq-note" id="dqNote"></p>
       </div>
 
-      <div class="cta-block" id="ctaBlock">
-        <div class="cta-eyebrow">15-minute call &middot; free</div>
-        <h3 class="cta-h">That number is an estimate. Let's find out what it actually is.</h3>
-        <p class="cta-body">We sit with you, go through the four Ps against your real data, and show you exactly where it's going. If we can help you get it back, we'll walk you through what that looks like.</p>
-        <a class="btn-cta" id="bookBtn" href="https://cal.com/soap/triage" target="_blank" rel="noopener">Book the 15 minutes <span>&rarr;</span></a>
-        <p class="dq-note" id="dqNote"></p>
+      <div class="email-block" id="emailBlock">
+        <div class="email-h">Not ready to call? Get the breakdown sent to you.</div>
+        <div class="email-sub">Which P is leaking most, what the pattern means, and the one fix to prioritise.</div>
+        <div class="email-row" id="emailRow">
+          <input class="email-in" type="email" id="emailIn" placeholder="you@yourbusiness.com" autocomplete="email" oninput="checkEmail()">
+          <button class="btn-email" id="emailBtn" onclick="submitEmail()" disabled>Send &rarr;</button>
+        </div>
+        <div class="email-sent" id="emailSent">&#10003; On its way.</div>
       </div>
     </section>
 
@@ -607,16 +603,8 @@ function renderResult(){
     n.textContent = "One note: SOAP's work is calibrated for £2M+ businesses. Your number is still real — the leaks are there. When you're ready to scale past £2M, we'll be here.";
   }
 
-  // webinar mode: skip email capture, auto-reveal CTA with simpler end card
-  if(WEBINAR_MODE){
-    document.getElementById('emailBlock').style.display = 'none';
-    const cta = document.getElementById('ctaBlock');
-    cta.style.display = 'block';
-    cta.querySelector('.cta-eyebrow').textContent = 'Want to verify this with your real numbers?';
-    cta.querySelector('.cta-h').textContent = "That's an industry estimate. The actual number is usually higher.";
-    cta.querySelector('.cta-body').textContent = "We sit down with you, go through the four Ps against your real data, and show you exactly where it's going. Talk to Ryan after this session.";
-    cta.querySelector('.btn-cta').style.display = 'none';
-  }
+  // CTA always visible immediately
+  document.getElementById('ctaBlock').style.display = 'block';
 
   document.getElementById('footNote').innerHTML = `${ind.label} &middot; ${revData.label}`;
   show('s-result','YOUR LEAK');
@@ -659,12 +647,13 @@ async function submitEmail(){
 
   if(EMAIL_ENDPOINT){
     try{
-      const {result, sorted, totalLo, totalHi, dq, ind, revData} = score();
+      const {sorted, totalLo, totalHi, dq, ind, revData} = score();
       await fetch(EMAIL_ENDPOINT,{
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({
-          email, industry:ans.industry, revenue:ans.revenue,
+          email, source:'profit-hunter',
+          industry:ans.industry, revenue:ans.revenue,
           answers:{...ans}, totalLo, totalHi,
           worstP:sorted[0], disqualified:dq,
           industryLabel:ind.label, revenueLabel:revData.label,
@@ -673,21 +662,8 @@ async function submitEmail(){
     }catch(e){ /* silent — never block UX on network */ }
   }
 
-  document.getElementById('emailRow').style.display    = 'none';
-  document.getElementById('emailBlock').querySelector('.email-skip').style.display = 'none';
-  document.getElementById('emailSent').style.display   = 'block';
-  showCTA();
-}
-
-function skipEmail(){
-  document.getElementById('emailBlock').style.display = 'none';
-  showCTA();
-}
-
-function showCTA(){
-  const cta = document.getElementById('ctaBlock');
-  cta.style.display = 'block';
-  setTimeout(()=>cta.scrollIntoView({behavior:'smooth',block:'nearest'}), 100);
+  document.getElementById('emailRow').style.display  = 'none';
+  document.getElementById('emailSent').style.display = 'block';
 }
 </script>
 </body>
