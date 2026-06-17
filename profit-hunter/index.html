@@ -274,7 +274,7 @@ footer{padding:28px 0;border-top:1px solid var(--carbon);font-family:var(--m);fo
 /* =====================================================================
    CONFIG
    ===================================================================== */
-const BOOKING_URL    = 'https://app.communitee.ai/widget/booking/soap-demo';
+const BOOKING_URL    = 'https://api.leadconnectorhq.com/widget/booking/wpVGlbjHAScfT3h2Q4jZ';
 const EMAIL_ENDPOINT = 'https://fhvuacfchffrjyclbdos.supabase.co/functions/v1/capture';
 const WEBINAR_MODE   = false;
 
@@ -704,11 +704,12 @@ function submitGate(){
 }
 
 function openCal(){
-  const btn = document.getElementById('bookBtn');
-  btn.textContent = 'Prefer to open in a new tab? Click here →';
-  btn.style.cssText += ';font-size:11px;padding:12px 20px;margin-top:14px;animation:none;opacity:.7;';
-  btn.onclick = function(e){ e.preventDefault(); window.open(BOOKING_URL,'_blank'); };
-  const wrap = document.getElementById('calWrap');
+  const emailEl = document.getElementById('gateEmail');
+  const email   = emailEl ? emailEl.value.trim() : '';
+  const src     = email ? BOOKING_URL + '?email=' + encodeURIComponent(email) : BOOKING_URL;
+  document.getElementById('bookBtn').style.display = 'none';
+  const wrap   = document.getElementById('calWrap');
+  wrap.querySelector('iframe').src = src;
   wrap.style.display = 'block';
   wrap.scrollIntoView({behavior:'smooth', block:'start'});
 }
