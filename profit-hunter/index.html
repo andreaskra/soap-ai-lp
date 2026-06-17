@@ -284,10 +284,12 @@ const WEBINAR_MODE   = false;
 // Pageview beacon
 (function(){
   try {
-    const data = JSON.stringify({event:'pageview'});
-    if(navigator.sendBeacon){
-      navigator.sendBeacon(TRACK_ENDPOINT, new Blob([data],{type:'application/json'}));
-    }
+    fetch(TRACK_ENDPOINT,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({event:'pageview'}),
+      keepalive:true
+    }).catch(function(){});
   } catch(e){}
 })();
 
