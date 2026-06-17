@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SOAP · Funnel Analytics</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --ink:#0a0e14;--ink2:#0f1318;--bone:#e8e3d8;--lime:#c8f135;--lime2:#b8e020;
+    --mist:#7a8494;--carbon:#1e2530;--slate:#161c25;--steel:#2a3344;
+    --s:'Inter Tight',sans-serif;--m:'JetBrains Mono',monospace;
+  }
+  body{background:var(--ink);color:var(--bone);font-family:var(--s);min-height:100vh;padding:0;}
+  header{padding:24px 40px;border-bottom:1px solid var(--carbon);display:flex;align-items:center;gap:16px;}
+  .logo-mark{width:10px;height:10px;background:var(--lime);flex-shrink:0;}
+  .logo-text{font-family:var(--m);font-size:13px;letter-spacing:.14em;text-transform:uppercase;}
+  .header-title{margin-left:auto;font-family:var(--m);font-size:11px;color:var(--mist);letter-spacing:.1em;text-transform:uppercase;}
+  main{max-width:900px;margin:0 auto;padding:48px 40px;}
+  .section-label{font-family:var(--m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-bottom:32px;}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px;}
+  .card{background:var(--ink2);border:1px solid var(--carbon);border-radius:3px;padding:28px 24px;}
+  .card-label{font-family:var(--m);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mist);margin-bottom:16px;}
+  .card-num{font-weight:900;font-size:56px;letter-spacing:-.04em;line-height:1;color:var(--bone);}
+  .card-num.lime{color:var(--lime);}
+  .card-sub{font-family:var(--m);font-size:11px;color:var(--mist);margin-top:10px;}
+  .card-rate{font-weight:700;font-size:18px;letter-spacing:-.02em;color:var(--lime);margin-top:12px;}
+  .funnel{background:var(--ink2);border:1px solid var(--carbon);border-radius:3px;padding:32px 28px;margin-bottom:48px;}
+  .funnel-title{font-family:var(--m);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mist);margin-bottom:28px;}
+  .funnel-row{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+  .funnel-bar-wrap{flex:1;background:var(--slate);border-radius:2px;height:32px;overflow:hidden;}
+  .funnel-bar{height:100%;background:var(--lime);border-radius:2px;transition:width .6s ease;min-width:2px;}
+  .funnel-bar.dim{background:var(--steel);}
+  .funnel-label{font-family:var(--m);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mist);width:80px;flex-shrink:0;}
+  .funnel-count{font-family:var(--m);font-size:13px;font-weight:700;width:60px;text-align:right;flex-shrink:0;}
+  .funnel-pct{font-family:var(--m);font-size:11px;color:var(--mist);width:48px;text-align:right;flex-shrink:0;}
+  .drop-row{display:flex;align-items:center;gap:16px;margin-bottom:16px;padding-left:96px;}
+  .drop-line{flex:1;border-left:1px dashed var(--carbon);height:16px;margin-left:0;}
+  .drop-label{font-family:var(--m);font-size:10px;color:var(--steel);letter-spacing:.06em;}
+  .updated{font-family:var(--m);font-size:11px;color:var(--steel);text-align:right;margin-top:8px;}
+  .ghl-note{background:var(--slate);border:1px solid var(--carbon);border-radius:3px;padding:20px 24px;margin-bottom:32px;}
+  .ghl-note p{font-family:var(--m);font-size:11px;color:var(--mist);line-height:1.7;letter-spacing:.03em;}
+  .ghl-note code{color:var(--lime);background:var(--carbon);padding:2px 6px;border-radius:2px;}
+  .refresh-btn{font-family:var(--m);font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid var(--carbon);color:var(--mist);padding:8px 16px;border-radius:2px;cursor:pointer;transition:border-color .15s,color .15s;}
+  .refresh-btn:hover{border-color:var(--lime);color:var(--lime);}
+  .top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+  .error-msg{font-family:var(--m);font-size:12px;color:#ff6b6b;margin-top:8px;}
+  @media(max-width:640px){
+    header{padding:20px 20px;}
+    main{padding:32px 20px;}
+    .cards{grid-template-columns:1fr;}
+    .card-num{font-size:42px;}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-mark"></div>
+  <div class="logo-text">SOAP</div>
+  <div class="header-title">Funnel Analytics · Profit Hunter</div>
+</header>
+<main>
+
+  <div class="top-row">
+    <div class="section-label">Live funnel</div>
+    <button class="refresh-btn" onclick="load()">↻ Refresh</button>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-label">Page views</div>
+      <div class="card-num" id="num-views">—</div>
+      <div class="card-sub" id="sub-views">&nbsp;</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Opt-ins</div>
+      <div class="card-num" id="num-optins">—</div>
+      <div class="card-rate" id="rate-optins">&nbsp;</div>
+      <div class="card-sub">email submitted</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Demos booked</div>
+      <div class="card-num lime" id="num-demos">—</div>
+      <div class="card-rate" id="rate-demos">&nbsp;</div>
+      <div class="card-sub">from opt-ins</div>
+    </div>
+  </div>
+
+  <div class="funnel">
+    <div class="funnel-title">Conversion funnel</div>
+    <div class="funnel-row">
+      <div class="funnel-label">Views</div>
+      <div class="funnel-bar-wrap"><div class="funnel-bar" id="bar-views" style="width:100%"></div></div>
+      <div class="funnel-count" id="fc-views">—</div>
+      <div class="funnel-pct">100%</div>
+    </div>
+    <div class="funnel-row">
+      <div class="funnel-label">Opt-ins</div>
+      <div class="funnel-bar-wrap"><div class="funnel-bar dim" id="bar-optins" style="width:0%"></div></div>
+      <div class="funnel-count" id="fc-optins">—</div>
+      <div class="funnel-pct" id="fp-optins">—</div>
+    </div>
+    <div class="funnel-row">
+      <div class="funnel-label">Demos</div>
+      <div class="funnel-bar-wrap"><div class="funnel-bar dim" id="bar-demos" style="width:0%"></div></div>
+      <div class="funnel-count" id="fc-demos">—</div>
+      <div class="funnel-pct" id="fp-demos">—</div>
+    </div>
+    <div class="updated" id="updated-ts"></div>
+  </div>
+
+  <div class="ghl-note">
+    <p>Demo bookings are tracked via a GHL Workflow webhook.<br>
+    Trigger: <code>Appointment Created</code> on the 1:1 Demo calendar →
+    Action: <code>Webhook POST</code> to
+    <code>https://fhvuacfchffrjyclbdos.supabase.co/functions/v1/track</code>
+    with body <code>{"event":"demo_booked"}</code><br>
+    Also add: Action: <code>Update Opportunity Stage</code> → <code>03 — Demo Booked</code></p>
+  </div>
+
+</main>
+<script>
+const ANALYTICS_URL = 'https://fhvuacfchffrjyclbdos.supabase.co/functions/v1/analytics';
+
+function pct(a, b){ return b > 0 ? Math.round((a/b)*100) + '%' : '—'; }
+function num(n){ return n.toLocaleString(); }
+
+async function load(){
+  try {
+    const res  = await fetch(ANALYTICS_URL);
+    const data = await res.json();
+    const { pageviews = 0, optins = 0, demos = 0 } = data;
+
+    document.getElementById('num-views').textContent   = num(pageviews);
+    document.getElementById('num-optins').textContent  = num(optins);
+    document.getElementById('num-demos').textContent   = num(demos);
+
+    const optin_rate = pct(optins, pageviews);
+    const demo_rate  = pct(demos, optins);
+
+    document.getElementById('rate-optins').textContent = optin_rate + ' of views';
+    document.getElementById('rate-demos').textContent  = demo_rate  + ' of opt-ins';
+    document.getElementById('sub-views').textContent   = 'visits to profit-hunter';
+
+    document.getElementById('fc-views').textContent   = num(pageviews);
+    document.getElementById('fc-optins').textContent  = num(optins);
+    document.getElementById('fc-demos').textContent   = num(demos);
+    document.getElementById('fp-optins').textContent  = optin_rate;
+    document.getElementById('fp-demos').textContent   = demo_rate;
+
+    const maxW = pageviews || 1;
+    document.getElementById('bar-views').style.width   = '100%';
+    document.getElementById('bar-optins').style.width  = Math.round((optins / maxW) * 100) + '%';
+    document.getElementById('bar-demos').style.width   = Math.round((demos  / maxW) * 100) + '%';
+
+    document.getElementById('updated-ts').textContent =
+      'Updated ' + new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'});
+
+  } catch(e){
+    document.getElementById('num-views').textContent  = 'err';
+    document.getElementById('num-optins').textContent = 'err';
+    document.getElementById('num-demos').textContent  = 'err';
+  }
+}
+
+load();
+</script>
+</body>
+</html>
