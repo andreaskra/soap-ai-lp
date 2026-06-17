@@ -210,6 +210,9 @@ footer{padding:28px 0;border-top:1px solid var(--carbon);font-family:var(--m);fo
       <div class="eyebrow"><span class="dot"></span>Your result is calculated</div>
       <h2 class="gate-h">Where do we send the breakdown?</h2>
       <p class="gate-sub">We'll show you your number now and send you a copy — which P is bleeding most, what the pattern means, and the one fix to prioritise.</p>
+      <div class="gate-row" style="margin-bottom:0;">
+        <input class="gate-in" type="text" id="gateName" placeholder="Your name" autocomplete="name" oninput="checkGate()" style="flex:1 1 100%;">
+      </div>
       <div class="gate-row">
         <input class="gate-in" type="email" id="gateEmail" placeholder="you@yourbusiness.com" autocomplete="email" oninput="checkGate()">
         <button class="btn-gate" id="gateBtn" onclick="submitGate()" disabled>See my result &rarr;</button>
@@ -679,20 +682,25 @@ function showEmailGate(){
 }
 
 function checkGate(){
-  const ok = /\S+@\S+\.\S+/.test(document.getElementById('gateEmail').value.trim());
-  document.getElementById('gateBtn').disabled = !ok;
+  const nameOk  = document.getElementById('gateName').value.trim().length > 0;
+  const emailOk = /\S+@\S+\.\S+/.test(document.getElementById('gateEmail').value.trim());
+  document.getElementById('gateBtn').disabled = !(nameOk && emailOk);
 }
 
 function submitGate(){
-  const email = document.getElementById('gateEmail').value.trim();
-  if(!/\S+@\S+\.\S+/.test(email)) return;
+  const fullName = document.getElementById('gateName').value.trim();
+  const email    = document.getElementById('gateEmail').value.trim();
+  if(!fullName || !/\S+@\S+\.\S+/.test(email)) return;
+  const nameParts = fullName.split(/\s+/);
+  const firstName = nameParts[0];
+  const lastName  = nameParts.slice(1).join(' ') || '';
   if(EMAIL_ENDPOINT){
     const {sorted, totalLo, totalHi, dq, ind, revData} = score();
     fetch(EMAIL_ENDPOINT,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        email, source:'profit-hunter',
+        email, firstName, lastName, source:'profit-hunter',
         industry:ans.industry, revenue:ans.revenue,
         answers:{...ans}, totalLo, totalHi,
         worstP:sorted[0], disqualified:dq,
@@ -705,8 +713,16 @@ function submitGate(){
 
 function openCal(){
   const emailEl = document.getElementById('gateEmail');
+  const nameEl  = document.getElementById('gateName');
   const email   = emailEl ? emailEl.value.trim() : '';
-  const src     = email ? BOOKING_URL + '?email=' + encodeURIComponent(email) : BOOKING_URL;
+  const name    = nameEl  ? nameEl.value.trim()  : '';
+  let src = BOOKING_URL;
+  if(email || name){
+    const p = new URLSearchParams();
+    if(email) p.set('email', email);
+    if(name)  p.set('name', name);
+    src = BOOKING_URL + '?' + p.toString();
+  }
   document.getElementById('bookBtn').style.display = 'none';
   const wrap   = document.getElementById('calWrap');
   wrap.querySelector('iframe').src = src;
