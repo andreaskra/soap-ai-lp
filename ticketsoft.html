@@ -68,11 +68,12 @@
   .board__foot b{color:var(--signal);}
 
   /* trust strip */
-  .trust{border-top:1px solid var(--carbon); margin-top:48px; padding-top:26px; display:flex; align-items:center; gap:28px; flex-wrap:wrap;}
-  .trust .lab{font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--mist);}
-  .trust .item{display:flex; align-items:baseline; gap:9px;}
-  .trust .item .v{font-family:var(--mono); font-size:22px; font-weight:600; color:var(--signal);}
-  .trust .item .t{font-size:13px; color:var(--bonemute); max-width:18ch;}
+  .trust{margin-top:40px; padding:32px; background:var(--signal); border-radius:16px; display:grid; grid-template-columns:repeat(3,1fr); gap:0;}
+  .trust .lab{display:none;}
+  .trust .item{display:flex; flex-direction:column; align-items:center; text-align:center; padding:0 24px; border-right:1px solid rgba(10,14,20,.15);}
+  .trust .item:last-child{border-right:none;}
+  .trust .item .v{font-family:var(--mono); font-size:36px; font-weight:600; color:var(--ink); letter-spacing:-.03em; line-height:1;}
+  .trust .item .t{font-size:13px; color:rgba(10,14,20,.6); margin-top:8px; max-width:20ch; line-height:1.4;}
 
   /* SECTION shells */
   .sec{padding:74px 0;}
